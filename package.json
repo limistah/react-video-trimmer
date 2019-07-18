@@ -66,6 +66,7 @@
     "jest": "^3.1.2",
     "jest-dom": "^3.1.2",
     "prop-types": "^15.7.2",
+    "react-player": "^1.11.1",
     "webpack-blocks": "^2.0.1"
   },
   "devDependencies": {

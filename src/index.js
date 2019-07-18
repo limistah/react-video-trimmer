@@ -1,29 +1,49 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useReducer } from "react";
 import FilePicker from "./components/FilePicker";
 import { readDataURL, arrayBufferToBlob, readArrayBuffer } from "./libs/utils";
 import VideoPlayer from "./components/VideoPlayer";
+import VideoThumbs from "./components/VideoThumbs";
 
 const ReactVideoTrimmer = () => {
-  const [videoDataURL, updateVideoDataURL] = useState("");
+  const initialState = {
+    videoDataURL: "",
+    videoArrayBuffer: []
+  };
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "updateVideoDataURL":
+        return { ...state, videoDataURL: action.payload };
+      case "updateVideoArrayBuffer":
+        return { ...state, videoArrayBuffer: action.payload };
+      default:
+        return state;
+    }
+  };
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const handleFileSelected = useCallback(file => {
-    console.log(file);
     readArrayBuffer(file).then(arrayBuffer => {
-      // const blob = arrayBufferToBlob(arrayBuffer, 0, arrayBuffer.byteLength);
-      const slicedBlobs = arrayBuffer.slice(0, 1000 * 60 * 2);
-      const blob = new Blob([new Uint8Array(slicedBlobs)], {
-        type: "video/webm"
-      });
-      console.log(blob);
+      updateVideoArrayBuffer(arrayBuffer);
+      const blob = arrayBufferToBlob(arrayBuffer);
       readDataURL(blob).then(dataURL => {
-        console.log(dataURL);
         updateVideoDataURL(dataURL);
       });
     });
   });
+
+  const updateVideoDataURL = dataURL =>
+    dispatch({ type: "updateVideoDataURL", payload: dataURL });
+
+  const updateVideoArrayBuffer = arrayBuffer =>
+    dispatch({ type: "updateVideoArrayBuffer", payload: arrayBuffer });
+
   return (
     <div>
       <FilePicker onFileSelected={handleFileSelected} />
-      {videoDataURL && <VideoPlayer src={videoDataURL} />}
+      {(state.videoArrayBuffer.byteLength || "") && (
+        <VideoThumbs videoArrayBuffer={state.videoArrayBuffer} />
+      )}
+      {state.videoDataURL && <VideoPlayer src={state.videoDataURL} />}
     </div>
   );
 };
