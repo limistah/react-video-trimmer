@@ -32,16 +32,6 @@
       "limit": "7 KB"
     }
   ],
-  "lint-staged": {
-    "*.js": [
-      "npm run pretty",
-      "git add"
-    ],
-    "*.{svg,png}": [
-      "imagemin",
-      "git add"
-    ]
-  },
   "jest": {
     "clearMocks": true,
     "setupFilesAfterEnv": [
