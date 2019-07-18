@@ -65,3 +65,9 @@ export const leftZero = (num, count) => {
 };
 
 export const noop = () => {};
+
+export const arrayBufferToBlob = (buffer, byteOffset = 0, length = 300) =>
+  new Blob([new Uint8Array(buffer, byteOffset, length)], {
+    type: "video/mp4",
+    name: "video.mp4"
+  });

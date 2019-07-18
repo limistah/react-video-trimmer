@@ -7,7 +7,9 @@ function FilePicker(props) {
       const video = e.target.files[0];
       if (isVideo(video)) {
         const handler = props.onFileSelected || noop;
-        handler(file);
+        handler(video);
+      } else {
+        return alert("Unsupported File Type");
       }
     }
   });
