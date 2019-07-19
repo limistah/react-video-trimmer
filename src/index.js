@@ -16,7 +16,7 @@ const ReactVideoTrimmer = () => {
     console.log("extractingFrames");
   });
   webVideo.on("extractedFrames", () => {
-    console.log("extractingFrames");
+    console.log("extractedFrames");
   });
 
   const initialState = {

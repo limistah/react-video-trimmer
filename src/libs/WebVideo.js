@@ -6,6 +6,7 @@ class WebVideo extends EventEmitter {
     super();
     this.videoFile = videoFile;
   }
+  _videoData = {};
   _videoFile = null;
   /**
    * @type {ArrayBuffer}
@@ -58,6 +59,19 @@ class WebVideo extends EventEmitter {
     const arrayBuffer = await this.readAsArrayBuffer();
     // convert to dataURL
     const dataURL = await this.readAsDataURL(arrayBuffer);
+
+    let videoObjectUrl = URL.createObjectURL(this.videoFile);
+    let video = document.createElement("video");
+
+    video.src = videoObjectUrl;
+    while (
+      (video.duration === Infinity || isNaN(video.duration)) &&
+      video.readyState < 2
+    ) {
+      await new Promise(r => setTimeout(r, 1000));
+      video.currentTime = 10000000 * Math.random();
+    }
+    this._videoData = video;
     this.emit("processedFile");
     return { dataURL, arrayBuffer, blob: this.convertBufferToBlob() };
   };
@@ -85,22 +99,11 @@ class WebVideo extends EventEmitter {
     return new Promise(async (resolve, reject) => {
       try {
         this.emit("extractingFrames");
-        let videoObjectUrl = URL.createObjectURL(this.videoFile);
-        let video = document.createElement("video");
-
+        let video = this._videoData;
         let seekResolve;
         video.addEventListener("seeked", async function() {
           if (seekResolve) seekResolve();
         });
-
-        video.src = videoObjectUrl;
-        while (
-          (video.duration === Infinity || isNaN(video.duration)) &&
-          video.readyState < 2
-        ) {
-          await new Promise(r => setTimeout(r, 1000));
-          video.currentTime = 10000000 * Math.random();
-        }
         let duration = video.duration;
 
         let canvas = document.createElement("canvas");
