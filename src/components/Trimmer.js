@@ -92,8 +92,8 @@ class Trimmer extends PureComponent {
 
 export class VideoTrimmer extends PureComponent {
   state = {
-    start: 10,
-    end: 20
+    start: 0,
+    end: 0
   };
   get widthDurationRatio() {
     return this.containerWidth / this.props.duration;
@@ -128,8 +128,8 @@ export class VideoTrimmer extends PureComponent {
               onEndTimeChange={this.handleEndTimeChange}
               widthDurationRatio={this.widthDurationRatio}
               containerWidth={this.containerWidth}
-              startTime={this.state.start}
-              endTime={this.state.end}
+              startTime={this.state.start || this.props.timeRange.start}
+              endTime={this.state.end || this.props.timeRange.end}
               onGetData={this.handleGetTrimData}
             />
           </>

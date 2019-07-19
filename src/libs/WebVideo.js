@@ -69,7 +69,6 @@ class WebVideo extends EventEmitter {
     this.emit("processingFile");
     // Read File As ArrayBuffer
     const arrayBuffer = await this.readAsArrayBuffer();
-    console.log(this.videoBuffer);
     // convert to dataURL
     const dataURL = await this.readAsDataURL(arrayBuffer);
 

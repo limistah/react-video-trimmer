@@ -27,7 +27,8 @@ class ReactVideoTrimmer extends React.PureComponent {
     videoDataURL: "",
     videoFrames: [],
     isExtractingFrame: false,
-    isDecoding: false
+    isDecoding: false,
+    timeRange: { start: 0, end: 0 }
   };
 
   updateVideoDataURL = dataURL => this.setState({ videoDataURL: dataURL });
@@ -45,6 +46,9 @@ class ReactVideoTrimmer extends React.PureComponent {
     const webVideo = this.webVideo;
     webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
       this.updateVideoDataURL(dataURL);
+      this.setState({
+        timeRange: { start: 0, end: this.webVideo.videoData.duration }
+      });
       webVideo.extractFramesFromVideo().then(frames => {
         this.updateVideoFrames(frames);
       });
@@ -59,10 +63,12 @@ class ReactVideoTrimmer extends React.PureComponent {
     // Slice the available buffer
     this.webVideo
       .sliceVideoBuffer(startToMilliseconds, endToMilliseconds)
-      .then(slicedBuffer => {
-        console.log(slicedBuffer);
+      .then(async slicedBuffer => {
+        // convert sliced buffer to dataURL
+        const dataURL = await this.webVideo.readAsDataURL(slicedBuffer);
+        // Update data URL
+        this.updateVideoDataURL(dataURL);
       });
-    // Replace the preview
   };
 
   render() {
@@ -73,9 +79,13 @@ class ReactVideoTrimmer extends React.PureComponent {
           videoFrames={this.state.videoFrames}
           duration={this.webVideo.videoData.duration}
           onTrim={this.handleVideoTrim}
+          timeRange={this.state.timeRange}
         />
         {this.state.videoDataURL && (
-          <VideoPlayer src={this.state.videoDataURL} />
+          <VideoPlayer
+            src={this.state.videoDataURL}
+            timeRange={this.state.timeRange}
+          />
         )}
       </div>
     );
