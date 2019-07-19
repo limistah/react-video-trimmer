@@ -5,7 +5,7 @@ function VideoPlayer(props) {
   return (
     <div>
       {/* <video src={props.src} controls={false} /> */}
-      <ReactPlayer url={props.src} playing />
+      <ReactPlayer url={props.src} />
     </div>
   );
 }

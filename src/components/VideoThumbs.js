@@ -1,6 +1,8 @@
 import React from "react";
 
-const VideoThumbs = ({ videoArrayBuffer }) => {
+const VideoThumbs = ({ videoFrames }) => {
+  // Convert the array to chunks with 5s
+
   return <div>This Contains Video Thumbnails</div>;
 };
 

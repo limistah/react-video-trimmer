@@ -8,6 +8,7 @@ if (process.env["BABEL_ENV"] === "es") {
 
 const plugins = [
   "@babel/plugin-proposal-export-default-from",
+  "@babel/plugin-proposal-class-properties",
   "@babel/plugin-proposal-logical-assignment-operators",
   ["@babel/plugin-proposal-optional-chaining", { loose: false }],
   ["@babel/plugin-proposal-pipeline-operator", { proposal: "minimal" }],

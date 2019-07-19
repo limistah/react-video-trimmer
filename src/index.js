@@ -3,11 +3,27 @@ import FilePicker from "./components/FilePicker";
 import { readDataURL, arrayBufferToBlob, readArrayBuffer } from "./libs/utils";
 import VideoPlayer from "./components/VideoPlayer";
 import VideoThumbs from "./components/VideoThumbs";
+import WebVideo from "./libs/WebVideo";
 
 const ReactVideoTrimmer = () => {
+  const webVideo = new WebVideo({});
+  webVideo.on("processingFile", () => {
+    console.log("Processing File");
+  });
+  webVideo.on("processedFile", () => {
+    console.log("Processed File");
+  });
+  webVideo.on("extractingFrames", () => {
+    console.log("extractingFrames");
+  });
+  webVideo.on("extractedFrames", () => {
+    console.log("extractingFrames");
+  });
+
   const initialState = {
     videoDataURL: "",
-    videoArrayBuffer: []
+    videoArrayBuffer: [],
+    videoFrames: []
   };
   const reducer = (state, action) => {
     switch (action.type) {
@@ -22,12 +38,15 @@ const ReactVideoTrimmer = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleFileSelected = useCallback(file => {
-    readArrayBuffer(file).then(arrayBuffer => {
+    webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
+      // console.log()
+      updateVideoDataURL(dataURL);
       updateVideoArrayBuffer(arrayBuffer);
-      const blob = arrayBufferToBlob(arrayBuffer);
-      readDataURL(blob).then(dataURL => {
-        updateVideoDataURL(dataURL);
-      });
+    });
+    webVideo.extractFramesFromVideo().then(frames => {
+      console.log({ frames });
+      // When chunks arrives
+      // Convert each chunk
     });
   });
 
@@ -36,12 +55,11 @@ const ReactVideoTrimmer = () => {
 
   const updateVideoArrayBuffer = arrayBuffer =>
     dispatch({ type: "updateVideoArrayBuffer", payload: arrayBuffer });
-
   return (
     <div>
       <FilePicker onFileSelected={handleFileSelected} />
-      {(state.videoArrayBuffer.byteLength || "") && (
-        <VideoThumbs videoArrayBuffer={state.videoArrayBuffer} />
+      {(state.videoFrames.length || "") && (
+        <VideoThumbs videoFrames={state.videoFrames} />
       )}
       {state.videoDataURL && <VideoPlayer src={state.videoDataURL} />}
     </div>
