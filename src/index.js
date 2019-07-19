@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useReducer } from "react";
 import FilePicker from "./components/FilePicker";
-import { readDataURL, arrayBufferToBlob, readArrayBuffer } from "./libs/utils";
 import VideoPlayer from "./components/VideoPlayer";
 import VideoThumbs from "./components/VideoThumbs";
 import WebVideo from "./libs/WebVideo";
@@ -29,8 +28,11 @@ const ReactVideoTrimmer = () => {
     switch (action.type) {
       case "updateVideoDataURL":
         return { ...state, videoDataURL: action.payload };
-      case "updateVideoArrayBuffer":
-        return { ...state, videoArrayBuffer: action.payload };
+
+      case "updateVideoDataURL":
+        return { ...state, videoDataURL: action.payload };
+      case "updateVideoFrames":
+        return { ...state, videoFrames: action.payload };
       default:
         return state;
     }
@@ -42,11 +44,9 @@ const ReactVideoTrimmer = () => {
       // console.log()
       updateVideoDataURL(dataURL);
       updateVideoArrayBuffer(arrayBuffer);
-    });
-    webVideo.extractFramesFromVideo().then(frames => {
-      console.log({ frames });
-      // When chunks arrives
-      // Convert each chunk
+      webVideo.extractFramesFromVideo().then(frames => {
+        updateVideoFrames(frames);
+      });
     });
   });
 
@@ -55,6 +55,9 @@ const ReactVideoTrimmer = () => {
 
   const updateVideoArrayBuffer = arrayBuffer =>
     dispatch({ type: "updateVideoArrayBuffer", payload: arrayBuffer });
+
+  const updateVideoFrames = frames =>
+    dispatch({ type: "updateVideoFrames", payload: frames });
   return (
     <div>
       <FilePicker onFileSelected={handleFileSelected} />
