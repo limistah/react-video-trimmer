@@ -11,10 +11,11 @@ class WebVideo extends EventEmitter {
   /**
    * @type {ArrayBuffer}
    */
-  videoBuffer = {};
+  _videoBuffer = {};
 
   readAsArrayBuffer = async () => {
-    this.videoBuffer = await readArrayBuffer(this._videoFile);
+    this._videoBuffer = await readArrayBuffer(this._videoFile);
+    console.log(this);
     return this.videoBuffer;
   };
 
@@ -59,12 +60,16 @@ class WebVideo extends EventEmitter {
   get videoData() {
     return this._videoData;
   }
+  get videoBuffer() {
+    return this._videoBuffer;
+  }
 
   decode = async file => {
     this.videoFile = file;
     this.emit("processingFile");
     // Read File As ArrayBuffer
     const arrayBuffer = await this.readAsArrayBuffer();
+    console.log(this.videoBuffer);
     // convert to dataURL
     const dataURL = await this.readAsDataURL(arrayBuffer);
 
@@ -147,6 +152,22 @@ class WebVideo extends EventEmitter {
         // }
       } catch (e) {
         reject(e);
+      }
+    });
+  };
+
+  sliceVideoBuffer = (begin, end) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const videoBuffer = this.videoBuffer;
+        let slicedBuffer = null;
+        console.log(videoBuffer);
+        if (videoBuffer.byteLength) {
+          slicedBuffer = videoBuffer.slice(begin, end);
+        }
+        resolve(slicedBuffer);
+      } catch (error) {
+        reject(error);
       }
     });
   };

@@ -29,6 +29,8 @@ export default class Dragger extends PureComponent {
   handleMouseUp = () => {
     window.removeEventListener("mousemove", this.handleMouseMove);
     window.removeEventListener("mouseup", this.handleMouseUp);
+    const handler = this.props.onDragStop || (() => {});
+    handler();
   };
 
   render() {

@@ -57,6 +57,10 @@ class Trimmer extends PureComponent {
     let time = pos2Time;
     this.props.onEndTimeChange(time);
   };
+  handleDragStop = () => {
+    const handler = this.props.onGetData || noop;
+    handler({ start: this.props.startTime, end: this.props.endTime });
+  };
   getTrimmerWidth = width => {
     return this.props.containerWidth - width;
   };
@@ -66,10 +70,18 @@ class Trimmer extends PureComponent {
     return (
       <React.Fragment>
         <TrimmerOverLay left={0} width={start} />
-        <Dragger x={start} onDrag={this.handleDragStart}>
+        <Dragger
+          x={start}
+          onDrag={this.handleDragStart}
+          onDragStop={this.handleDragStop}
+        >
           <TimeStamp time={this.props.startTime} />
         </Dragger>
-        <Dragger x={end} onDrag={this.handleDragEnd}>
+        <Dragger
+          x={end}
+          onDrag={this.handleDragEnd}
+          onDragStop={this.handleDragStop}
+        >
           <TimeStamp time={this.props.endTime} />
         </Dragger>
         <TrimmerOverLay right={0} width={this.getTrimmerWidth(end)} />
@@ -92,20 +104,16 @@ export class VideoTrimmer extends PureComponent {
 
   handleStartTimeChange = time => {
     this.setState({ start: time });
-    this.emitVideoTrim();
   };
-
-  emitVideoTrim = () => {
+  handleGetTrimData = () => {
     const trimmerHandler = this.props.onTrim || noop;
     setTimeout(
       () => trimmerHandler({ start: this.state.start, end: this.state.end }),
       200
     );
   };
-
   handleEndTimeChange = time => {
     this.setState({ end: time });
-    this.emitVideoTrim();
   };
 
   render() {
@@ -122,6 +130,7 @@ export class VideoTrimmer extends PureComponent {
               containerWidth={this.containerWidth}
               startTime={this.state.start}
               endTime={this.state.end}
+              onGetData={this.handleGetTrimData}
             />
           </>
         )}
