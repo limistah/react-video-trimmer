@@ -6,29 +6,26 @@ import WebVideo from "./libs/WebVideo";
 
 const ReactVideoTrimmer = () => {
   const webVideo = new WebVideo({});
-  webVideo.on("processingFile", () => {
-    console.log("Processing File");
-  });
-  webVideo.on("processedFile", () => {
-    console.log("Processed File");
-  });
-  webVideo.on("extractingFrames", () => {
-    console.log("extractingFrames");
-  });
-  webVideo.on("extractedFrames", () => {
-    console.log("extractedFrames");
-  });
+  webVideo.on("processingFile", () => updateIsDecoding(true));
+  webVideo.on("processedFile", () => updateIsDecoding(false));
+  webVideo.on("extractingFrames", () => updateIsExtractingFrame(true));
+  webVideo.on("extractedFrames", () => updateIsExtractingFrame(false));
 
   const initialState = {
     videoDataURL: "",
     videoArrayBuffer: [],
-    videoFrames: []
+    videoFrames: [],
+    isExtractingFrame: false,
+    isDecoding: false
   };
   const reducer = (state, action) => {
     switch (action.type) {
       case "updateVideoDataURL":
         return { ...state, videoDataURL: action.payload };
-
+      case "updateIsExtractingFrame":
+        return { ...state, isExtractingFrame: action.payload };
+      case "updateIsDecoding":
+        return { ...state, isDecoding: action.payload };
       case "updateVideoDataURL":
         return { ...state, videoDataURL: action.payload };
       case "updateVideoFrames":
@@ -50,14 +47,22 @@ const ReactVideoTrimmer = () => {
     });
   });
 
+  const dispatchAction = (type, payload) => dispatch({ type, payload });
+
   const updateVideoDataURL = dataURL =>
-    dispatch({ type: "updateVideoDataURL", payload: dataURL });
+    dispatchAction("updateVideoDataURL", dataURL);
 
   const updateVideoArrayBuffer = arrayBuffer =>
-    dispatch({ type: "updateVideoArrayBuffer", payload: arrayBuffer });
+    dispatchAction("updateVideoArrayBuffer", arrayBuffer);
 
   const updateVideoFrames = frames =>
-    dispatch({ type: "updateVideoFrames", payload: frames });
+    dispatchAction("updateVideoFrames", frames);
+
+  const updateIsExtractingFrame = state =>
+    dispatchAction("updateIsExtractingFrame", state);
+
+  const updateIsDecoding = state => dispatchAction("updateIsDecoding", state);
+
   return (
     <div>
       <FilePicker onFileSelected={handleFileSelected} />
