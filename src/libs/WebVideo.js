@@ -52,6 +52,14 @@ class WebVideo extends EventEmitter {
     return this._videoFile;
   }
 
+  get duration() {
+    return this._videoData.duration || 0;
+  }
+
+  get videoData() {
+    return this._videoData;
+  }
+
   decode = async file => {
     this.videoFile = file;
     this.emit("processingFile");

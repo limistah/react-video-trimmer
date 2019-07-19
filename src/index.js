@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useReducer } from "react";
 import FilePicker from "./components/FilePicker";
 import VideoPlayer from "./components/VideoPlayer";
-import VideoThumbs from "./components/VideoThumbs";
+import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
 
 const ReactVideoTrimmer = () => {
@@ -9,14 +9,18 @@ const ReactVideoTrimmer = () => {
   webVideo.on("processingFile", () => updateIsDecoding(true));
   webVideo.on("processedFile", () => updateIsDecoding(false));
   webVideo.on("extractingFrames", () => updateIsExtractingFrame(true));
-  webVideo.on("extractedFrames", () => updateIsExtractingFrame(false));
+  webVideo.on("extractedFrames", () => {
+    updateVideoDuration(webVideo.videoData.duration);
+    updateIsExtractingFrame(false);
+  });
 
   const initialState = {
     videoDataURL: "",
     videoArrayBuffer: [],
     videoFrames: [],
     isExtractingFrame: false,
-    isDecoding: false
+    isDecoding: false,
+    videoDuration: 0
   };
   const reducer = (state, action) => {
     switch (action.type) {
@@ -30,6 +34,8 @@ const ReactVideoTrimmer = () => {
         return { ...state, videoDataURL: action.payload };
       case "updateVideoFrames":
         return { ...state, videoFrames: action.payload };
+      case "updateVideoDuration":
+        return { ...state, videoDuration: action.payload };
       default:
         return state;
     }
@@ -47,6 +53,10 @@ const ReactVideoTrimmer = () => {
     });
   });
 
+  const handleVideoTrim = useCallback(time => {
+    console.log(time);
+  });
+
   const dispatchAction = (type, payload) => dispatch({ type, payload });
 
   const updateVideoDataURL = dataURL =>
@@ -62,13 +72,17 @@ const ReactVideoTrimmer = () => {
     dispatchAction("updateIsExtractingFrame", state);
 
   const updateIsDecoding = state => dispatchAction("updateIsDecoding", state);
+  const updateVideoDuration = state =>
+    dispatchAction("updateVideoDuration", state);
 
   return (
     <div>
       <FilePicker onFileSelected={handleFileSelected} />
-      {(state.videoFrames.length || "") && (
-        <VideoThumbs videoFrames={state.videoFrames} />
-      )}
+      <Trimmer
+        videoFrames={state.videoFrames}
+        duration={state.videoDuration}
+        onTrim={handleVideoTrim}
+      />
       {state.videoDataURL && <VideoPlayer src={state.videoDataURL} />}
     </div>
   );
