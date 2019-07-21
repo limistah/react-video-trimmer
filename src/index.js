@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useReducer } from "react";
 import FilePicker from "./components/FilePicker";
-import VideoPlayer from "./components/VideoPlayer";
+import Status from "./components/Status";
+import Player from "./components/VideoPlayer";
 import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
 import { encode } from "./libs/workerClient";
@@ -46,23 +47,24 @@ class ReactVideoTrimmer extends React.PureComponent {
     this.setState({ updateVideoDuration: duration });
 
   handleFileSelected = file => {
-    console.log(file);
     this.setState({ decoding: true });
     const webVideo = this.webVideo;
-    // webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
-    //   encode(file).then(_blob => {
-    //     const dataURL = URL.createObjectURL(_blob);
-    //     this.updateVideoDataURL(dataURL);
-    //   });
 
-    //   this.updateVideoDataURL(dataURL);
-    //   this.setState({
-    //     timeRange: { start: 0, end: this.webVideo.videoData.duration }
-    //   });
-    //   webVideo.extractFramesFromVideo().then(frames => {
-    //     this.updateVideoFrames(frames);
-    //   });
-    // });
+    webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
+      //   // encode(file).then(_blob => {
+      //   //   const dataURL = URL.createObjectURL(_blob);
+      //   //   this.updateVideoDataURL(dataURL);
+      //   // });
+
+      this.setState({ decoding: false });
+      this.updateVideoDataURL(dataURL);
+      this.setState({
+        timeRange: { start: 0, end: this.webVideo.videoData.duration }
+      });
+      //   webVideo.extractFramesFromVideo().then(frames => {
+      //     this.updateVideoFrames(frames);
+      //   });
+    });
   };
 
   handleVideoTrim = time => {
@@ -84,25 +86,28 @@ class ReactVideoTrimmer extends React.PureComponent {
   };
 
   render() {
-    const { decoding, videoDataURL } = this.state;
+    const { decoding, encoding, videoDataURL } = this.state;
     return (
       <div className="rvt-main-container">
         {!decoding && !videoDataURL && (
           <FilePicker onFileSelected={this.handleFileSelected} />
         )}
-        {decoding && !videoDataURL && <div> Decoding </div>}
-        {/* <Trimmer
-          videoFrames={this.state.videoFrames}
-          duration={this.webVideo.videoData.duration}
-          onTrim={this.handleVideoTrim}
-          timeRange={this.state.timeRange}
-        />
-        {this.state.videoDataURL && (
-          <VideoPlayer
-            src={this.state.videoDataURL}
+        {decoding && !videoDataURL && <Status statusMessage="DECODING..." />}
+        {/* {!decoding && videoDataURL && (
+          <Trimmer
+            videoFrames={this.state.videoFrames}
+            duration={this.webVideo.videoData.duration}
+            onTrim={this.handleVideoTrim}
             timeRange={this.state.timeRange}
           />
         )} */}
+
+        {!decoding && !encoding && videoDataURL && (
+          <Player
+            src={this.state.videoDataURL}
+            timeRange={this.state.timeRange}
+          />
+        )}
       </div>
     );
   }
