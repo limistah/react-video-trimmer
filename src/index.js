@@ -4,6 +4,7 @@ import VideoPlayer from "./components/VideoPlayer";
 import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
 import { encode } from "./libs/workerClient";
+import "./styles/video-trimmer.scss";
 
 class ReactVideoTrimmer extends React.PureComponent {
   /**
@@ -81,9 +82,9 @@ class ReactVideoTrimmer extends React.PureComponent {
 
   render() {
     return (
-      <div>
+      <div className="rvt-main-container">
         <FilePicker onFileSelected={this.handleFileSelected} />
-        <Trimmer
+        {/* <Trimmer
           videoFrames={this.state.videoFrames}
           duration={this.webVideo.videoData.duration}
           onTrim={this.handleVideoTrim}
@@ -94,7 +95,7 @@ class ReactVideoTrimmer extends React.PureComponent {
             src={this.state.videoDataURL}
             timeRange={this.state.timeRange}
           />
-        )}
+        )} */}
       </div>
     );
   }

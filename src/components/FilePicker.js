@@ -1,7 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { isVideo, noop } from "../libs/utils";
+import "../styles/file-picker.scss";
 
 function FilePicker(props) {
+  const inputRef = useRef();
   const handleFileChange = useCallback(e => {
     if (e.target.files.length) {
       const video = e.target.files[0];
@@ -13,9 +15,18 @@ function FilePicker(props) {
       }
     }
   });
+  const handleContainerClicked = useCallback(() => {
+    inputRef.current.click();
+  });
   return (
-    <div>
-      <input type="file" accept="video/*" onChange={handleFileChange} />
+    <div className="rvt-file-picker" onClick={handleContainerClicked}>
+      Pick A Video
+      <input
+        type="file"
+        accept="video/*"
+        onChange={handleFileChange}
+        ref={inputRef}
+      />
     </div>
   );
 }
