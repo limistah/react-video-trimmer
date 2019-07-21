@@ -1,5 +1,7 @@
 import React from "react";
 import ReactPlayer from "react-player";
+import "../styles/player.scss";
+import { formatSeconds, noop, leftZero } from "../libs/utils";
 
 class VideoPlayer extends React.Component {
   state = {
@@ -35,13 +37,16 @@ class VideoPlayer extends React.Component {
         this.player.seekTo(startTimeRange, "seconds");
         this.setState({ playing: false });
       }
-      const handler = this.props.onPlayerProgress || (() => {});
+      const handler = this.props.onPlayerProgress || noop;
       handler(playedSeconds);
     }
   };
+  displaySeconds(seconds) {
+    return seconds.toFixed(2) + "s";
+  }
   render() {
     return (
-      <div>
+      <div className="rvt-player-cont">
         {/* <video src={props.src} controls={false} /> */}
         <ReactPlayer
           onProgress={this.handlePlayerProgress}
@@ -49,14 +54,15 @@ class VideoPlayer extends React.Component {
           ref={el => (this.player = el)}
           playing={this.state.playing}
         />
-        <span>
-          Starting At:
-          {this.props.timeRange.start}
-        </span>{" "}
-        <span>
-          Ending At:
-          {this.props.timeRange.end}{" "}
-        </span>
+        <div className="rvt-player-time-range-cont">
+          <span className="rvt-player-time-range">
+            From:{" "}
+            <strong>{this.displaySeconds(this.props.timeRange.start)}</strong>
+          </span>
+          <span className="rvt-player-time-range">
+            To: <strong>{this.displaySeconds(this.props.timeRange.end)}</strong>
+          </span>
+        </div>
       </div>
     );
   }
