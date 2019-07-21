@@ -62,12 +62,14 @@
   "dependencies": {
     "attr-accept": "^1.1.3",
     "eslint-config-airbnb": "^17.1.1",
+    "ffmpeg.js": "^3.1.9001",
     "file-selector": "^0.1.11",
     "jest": "^3.1.2",
     "jest-dom": "^3.1.2",
     "prop-types": "^15.7.2",
     "react-player": "^1.11.1",
-    "webpack-blocks": "^2.0.1"
+    "webpack-blocks": "^2.0.1",
+    "webworker-file": "^0.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",

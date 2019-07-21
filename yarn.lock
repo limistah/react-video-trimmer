@@ -5238,6 +5238,11 @@ fecha@^2.3.3:
   resolved "https://registry.yarnpkg.com/fecha/-/fecha-2.3.3.tgz#948e74157df1a32fd1b12c3a3c3cdcb6ec9d96cd"
   integrity sha512-lUGBnIamTAwk4znq5BcqsDaxSmZ9nDVJaij6NvRt/Tg4R69gERA+otPKbS86ROw9nxVMw2/mp1fnaiWqbs6Sdg==
 
+ffmpeg.js@^3.1.9001:
+  version "3.1.9001"
+  resolved "https://registry.yarnpkg.com/ffmpeg.js/-/ffmpeg.js-3.1.9001.tgz#3569b993027667feea22a2a6dc2b1350fbb9f9c1"
+  integrity sha1-NWm5kwJ2Z/7qIqKm3CsTUPu5+cE=
+
 figgy-pudding@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
@@ -13481,6 +13486,18 @@ websocket-extensions@>=0.1.1:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
   integrity sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg==
+
+webworker-file@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/webworker-file/-/webworker-file-0.1.0.tgz#ed36ef009a6c8112fecd2c82965a53ad4a47ead5"
+  integrity sha512-tDuYGp1RbwAcTc8n6zVXmad5+z0lgLac6p+3u7DCxxshNJJOO9jJtupSyBCHG5QXnwF5uSKhdqj6J55QvlOOqg==
+  dependencies:
+    attr-accept "^1.1.3"
+    file-selector "^0.1.11"
+    jest "^3.1.2"
+    jest-dom "^3.1.2"
+    prop-types "^15.7.2"
+    webpack-blocks "^2.0.1"
 
 whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   version "1.0.5"

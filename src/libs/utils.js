@@ -67,7 +67,7 @@ export const leftZero = (num, count) => {
 export const noop = () => {};
 
 export const arrayBufferToBlob = buffer =>
-  new Blob([new Uint8Array(buffer)], {
+  new Blob([new Uint8Array(buffer, 0, buffer.byteLength)], {
     type: "video/webm",
     name: "video.webm"
   });

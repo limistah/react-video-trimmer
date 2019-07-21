@@ -3,6 +3,7 @@ import FilePicker from "./components/FilePicker";
 import VideoPlayer from "./components/VideoPlayer";
 import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
+import { encode } from "./libs/workerClient";
 
 class ReactVideoTrimmer extends React.PureComponent {
   /**
@@ -45,6 +46,11 @@ class ReactVideoTrimmer extends React.PureComponent {
   handleFileSelected = file => {
     const webVideo = this.webVideo;
     webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
+      encode(file).then(_blob => {
+        const dataURL = URL.createObjectURL(_blob);
+        this.updateVideoDataURL(dataURL);
+      });
+
       this.updateVideoDataURL(dataURL);
       this.setState({
         timeRange: { start: 0, end: this.webVideo.videoData.duration }
@@ -57,17 +63,19 @@ class ReactVideoTrimmer extends React.PureComponent {
 
   handleVideoTrim = time => {
     // convert start time and end time to index of array buffers
-    const secondsToMilliseconds = seconds => seconds * 1000;
+    const secondsToMilliseconds = seconds => seconds * 10000;
     const startToMilliseconds = secondsToMilliseconds(time.start);
     const endToMilliseconds = secondsToMilliseconds(time.end);
+    this.setState({ timeRange: time });
     // Slice the available buffer
     this.webVideo
       .sliceVideoBuffer(startToMilliseconds, endToMilliseconds)
       .then(async slicedBuffer => {
         // convert sliced buffer to dataURL
-        const dataURL = await this.webVideo.readAsDataURL(slicedBuffer);
-        // Update data URL
-        this.updateVideoDataURL(dataURL);
+        this.webVideo.readAsDataURL(slicedBuffer).then(dataURL => {
+          // Update data URL
+          this.updateVideoDataURL(dataURL);
+        });
       });
   };
 

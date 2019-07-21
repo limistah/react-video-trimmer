@@ -108,7 +108,11 @@ export class VideoTrimmer extends PureComponent {
   handleGetTrimData = () => {
     const trimmerHandler = this.props.onTrim || noop;
     setTimeout(
-      () => trimmerHandler({ start: this.state.start, end: this.state.end }),
+      () =>
+        trimmerHandler({
+          start: this.state.start || this.props.timeRange.start,
+          end: this.state.end || this.props.timeRange.end
+        }),
       200
     );
   };
