@@ -26,6 +26,7 @@ class ReactVideoTrimmer extends React.PureComponent {
   }
 
   state = {
+    decoding: false,
     videoDataURL: "",
     videoFrames: [],
     isExtractingFrame: false,
@@ -45,21 +46,23 @@ class ReactVideoTrimmer extends React.PureComponent {
     this.setState({ updateVideoDuration: duration });
 
   handleFileSelected = file => {
+    console.log(file);
+    this.setState({ decoding: true });
     const webVideo = this.webVideo;
-    webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
-      encode(file).then(_blob => {
-        const dataURL = URL.createObjectURL(_blob);
-        this.updateVideoDataURL(dataURL);
-      });
+    // webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
+    //   encode(file).then(_blob => {
+    //     const dataURL = URL.createObjectURL(_blob);
+    //     this.updateVideoDataURL(dataURL);
+    //   });
 
-      this.updateVideoDataURL(dataURL);
-      this.setState({
-        timeRange: { start: 0, end: this.webVideo.videoData.duration }
-      });
-      webVideo.extractFramesFromVideo().then(frames => {
-        this.updateVideoFrames(frames);
-      });
-    });
+    //   this.updateVideoDataURL(dataURL);
+    //   this.setState({
+    //     timeRange: { start: 0, end: this.webVideo.videoData.duration }
+    //   });
+    //   webVideo.extractFramesFromVideo().then(frames => {
+    //     this.updateVideoFrames(frames);
+    //   });
+    // });
   };
 
   handleVideoTrim = time => {
@@ -81,9 +84,13 @@ class ReactVideoTrimmer extends React.PureComponent {
   };
 
   render() {
+    const { decoding, videoDataURL } = this.state;
     return (
       <div className="rvt-main-container">
-        <FilePicker onFileSelected={this.handleFileSelected} />
+        {!decoding && !videoDataURL && (
+          <FilePicker onFileSelected={this.handleFileSelected} />
+        )}
+        {decoding && !videoDataURL && <div> Decoding </div>}
         {/* <Trimmer
           videoFrames={this.state.videoFrames}
           duration={this.webVideo.videoData.duration}
