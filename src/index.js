@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useReducer } from "react";
 import FilePicker from "./components/FilePicker";
 import Status from "./components/Status";
-import Player from "./components/VideoPlayer";
+import Player from "./components/Player";
 import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
 import { encode } from "./libs/workerClient";
@@ -59,7 +59,8 @@ class ReactVideoTrimmer extends React.PureComponent {
       this.setState({ decoding: false });
       this.updateVideoDataURL(dataURL);
       this.setState({
-        timeRange: { start: 0, end: this.webVideo.videoData.duration }
+        // timeRange: { start: 10, end: this.webVideo.videoData.duration }
+        timeRange: { start: 10, end: 20 }
       });
       //   webVideo.extractFramesFromVideo().then(frames => {
       //     this.updateVideoFrames(frames);
