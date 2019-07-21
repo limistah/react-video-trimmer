@@ -18,15 +18,15 @@
   }
 }
 
-// @keyframes spin {
-//   from {
-//     transform: rotate(0);
-//   }
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
 
-//   to {
-//     transform: rotate(360deg);
-//   }
-// }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .rvt-icon-spin {
   animation: spin infinite 1s linear;

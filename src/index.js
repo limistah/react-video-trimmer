@@ -29,6 +29,8 @@ class ReactVideoTrimmer extends React.PureComponent {
 
   state = {
     decoding: false,
+    encoding: false,
+    playVideo: false,
     videoDataURL: "",
     videoFrames: [],
     isExtractingFrame: false,
@@ -86,7 +88,16 @@ class ReactVideoTrimmer extends React.PureComponent {
         });
       });
   };
-
+  handleEncodeVideo = () => {
+    console.log("Encode Video Now!");
+  };
+  handlePauseVideo = () => {
+    const playVideo = this.state.playVideo;
+    this.setState({ playVideo: !playVideo });
+  };
+  onReplayClick = () => {
+    console.log("Replay Video");
+  };
   render() {
     const { decoding, encoding, videoDataURL } = this.state;
     return (
@@ -104,13 +115,22 @@ class ReactVideoTrimmer extends React.PureComponent {
           />
         )} */}
 
-        {!decoding && !encoding && videoDataURL && (
-          <Player
-            src={this.state.videoDataURL}
-            timeRange={this.state.timeRange}
-          />
+        {!decoding && videoDataURL && (
+          <>
+            <Player
+              src={this.state.videoDataURL}
+              timeRange={this.state.timeRange}
+              playVideo={this.state.playVideo}
+            />
+            <Controls
+              showEncodeBtn={this.props.showEncodeBtn}
+              onEncode={this.handleEncodeVideo}
+              onPauseClick={this.handlePauseVideo}
+              processing={encoding}
+              paused={!this.state.playVideo}
+            />
+          </>
         )}
-        <Controls />
       </div>
     );
   }

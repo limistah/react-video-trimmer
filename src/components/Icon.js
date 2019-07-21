@@ -27,7 +27,6 @@ const Music = ({ className }) => (
 const Play = ({ className }) => (
   <svg
     className={className}
-    fill="#000000"
     height="24"
     viewBox="0 0 24 24"
     width="24"
@@ -41,7 +40,6 @@ const Play = ({ className }) => (
 const Pause = ({ className }) => (
   <svg
     className={className}
-    fill="#000000"
     height="24"
     viewBox="0 0 24 24"
     width="24"

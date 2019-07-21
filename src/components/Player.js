@@ -35,7 +35,7 @@ class VideoPlayer extends React.Component {
       }
       if (playedSecondsIsGreaterThanEndTime) {
         this.player.seekTo(startTimeRange, "seconds");
-        this.setState({ playing: false });
+        // this.setState({ playing: false });
       }
       const handler = this.props.onPlayerProgress || noop;
       handler(playedSeconds);
