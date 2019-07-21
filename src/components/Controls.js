@@ -3,22 +3,30 @@ import Icon from "./Icon";
 import "../styles/controls.scss";
 
 const Controls = ({
-  onPauseClick,
-  paused,
-  // onReplayClick,
+  onPlayPauseClick,
+  playing,
+  onReselectFile,
   processing,
   onEncode,
   showEncodeBtn
 }) => {
   return (
     <div className="rvt-controls-cont">
-      <a className="rvt-controller-item" title="Pause" onClick={onPauseClick}>
-        <Icon name={paused ? "play" : "pause"} />
+      <a
+        className="rvt-controller-item"
+        title="Pause"
+        onClick={onPlayPauseClick}
+      >
+        <Icon name={playing ? "pause" : "play"} />
       </a>
 
-      {/* <a className="rvt-controller-item" title="Replay" onClick={onReplayClick}>
+      <a
+        className="rvt-controller-item"
+        title="Replay"
+        onClick={onReselectFile}
+      >
         <Icon name="replay" />
-      </a> */}
+      </a>
       {!showEncodeBtn && (
         <div className="rvt-controller-dropdown rvt-controller-list-wrap">
           <a className="rvt-controller-item" onClick={onEncode}>

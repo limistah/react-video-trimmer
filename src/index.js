@@ -7,6 +7,7 @@ import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
 import { encode } from "./libs/workerClient";
 import "./styles/video-trimmer.scss";
+import Icon from "./components/Icon";
 
 class ReactVideoTrimmer extends React.PureComponent {
   /**
@@ -91,12 +92,28 @@ class ReactVideoTrimmer extends React.PureComponent {
   handleEncodeVideo = () => {
     console.log("Encode Video Now!");
   };
-  handlePauseVideo = () => {
-    const playVideo = this.state.playVideo;
+  handlePlayPauseVideo = nextPlayPauseState => {
+    const { playVideo } = this.state;
     this.setState({ playVideo: !playVideo });
   };
-  onReplayClick = () => {
-    console.log("Replay Video");
+  handlePlayerPause = () => {
+    this.setState({ playVideo: false });
+  };
+  handlePlayerPlay = () => {
+    this.setState({ playVideo: true });
+  };
+  handleReselectFile = () => {
+    const state = {
+      decoding: false,
+      encoding: false,
+      playVideo: false,
+      videoDataURL: "",
+      videoFrames: [],
+      isExtractingFrame: false,
+      isDecoding: false,
+      timeRange: this.props.timeRange || { start: 0, end: 0 }
+    };
+    this.setState(state);
   };
   render() {
     const { decoding, encoding, videoDataURL } = this.state;
@@ -105,7 +122,12 @@ class ReactVideoTrimmer extends React.PureComponent {
         {!decoding && !videoDataURL && (
           <FilePicker onFileSelected={this.handleFileSelected} />
         )}
-        {decoding && !videoDataURL && <Status statusMessage="DECODING..." />}
+        {decoding && !videoDataURL && (
+          <Status>
+            <Icon name="spin" className="rvt-icon-spin" />
+            DECODING...
+          </Status>
+        )}
         {/* {!decoding && videoDataURL && (
           <Trimmer
             videoFrames={this.state.videoFrames}
@@ -121,13 +143,16 @@ class ReactVideoTrimmer extends React.PureComponent {
               src={this.state.videoDataURL}
               timeRange={this.state.timeRange}
               playVideo={this.state.playVideo}
+              onPlayerPlay={this.handlePlayerPlay}
+              onPlayerPause={this.handlePlayerPause}
             />
             <Controls
               showEncodeBtn={this.props.showEncodeBtn}
+              onReselectFile={this.handleReselectFile}
               onEncode={this.handleEncodeVideo}
-              onPauseClick={this.handlePauseVideo}
+              onPlayPauseClick={this.handlePlayPauseVideo}
               processing={encoding}
-              paused={!this.state.playVideo}
+              playing={this.state.playVideo}
             />
           </>
         )}

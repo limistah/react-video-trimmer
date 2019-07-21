@@ -93,7 +93,11 @@ const Icon = props => {
       El = Download;
       break;
   }
-  return <El className={`rvt-icon rat-icon-${props.name}`} />;
+  return (
+    <El
+      className={`rvt-icon rat-icon-${props.name} ${props.className}`.trim()}
+    />
+  );
 };
 
 Icon.propTypes = {

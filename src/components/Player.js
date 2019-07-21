@@ -17,10 +17,8 @@ class VideoPlayer extends React.Component {
       this.setState({ playing: false });
       this.player.seekTo(newTimeRange.start, "seconds");
     }
-    if (newProps.playVideo && !this.props.playVideo) {
-      this.setState({ playing: true });
-    } else if (newProps.playVideo && !this.props.playVideo) {
-      this.setState({ playing: false });
+    if (newProps.playVideo !== this.props.playVideo) {
+      this.setState({ playing: newProps.playVideo });
     }
   }
   handlePlayerProgress = data => {
@@ -44,11 +42,21 @@ class VideoPlayer extends React.Component {
   displaySeconds(seconds) {
     return seconds.toFixed(2) + "s";
   }
+  handleOnPause = () => {
+    const handler = this.props.onPlayerPause || noop;
+    handler();
+  };
+  handleOnPlay = () => {
+    const handler = this.props.onPlayerPlay || noop;
+    handler();
+  };
   render() {
     return (
-      <div className="rvt-player-cont">
+      <div className="rvt-player-cont" onContextMenu={() => {}}>
         {/* <video src={props.src} controls={false} /> */}
         <ReactPlayer
+          onPlay={this.handleOnPause}
+          onPlay={this.handleOnPlay}
           onProgress={this.handlePlayerProgress}
           url={this.props.src}
           ref={el => (this.player = el)}
