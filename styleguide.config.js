@@ -3,7 +3,7 @@ const {
   createConfig,
   babel,
   match,
-  postcss,
+  file,
   sass,
   css
 } = require("webpack-blocks");
@@ -13,7 +13,8 @@ module.exports = {
   styleguideDir: path.join(__dirname, "styleguide"),
   webpackConfig: createConfig([
     babel(),
-    match(["*.scss", "*.css", "!*node_modules*"], [css(), sass()])
+    match(["*.scss", "*.css", "!*node_modules*"], [css(), sass()]),
+    match(["*.svg", "!*node_modules*"], [file()])
   ]),
   exampleMode: "expand",
   usageMode: "expand",

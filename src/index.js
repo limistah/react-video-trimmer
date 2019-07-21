@@ -2,6 +2,7 @@ import React, { useCallback, useState, useReducer } from "react";
 import FilePicker from "./components/FilePicker";
 import Status from "./components/Status";
 import Player from "./components/Player";
+import Controls from "./components/Controls";
 import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
 import { encode } from "./libs/workerClient";
@@ -109,6 +110,7 @@ class ReactVideoTrimmer extends React.PureComponent {
             timeRange={this.state.timeRange}
           />
         )}
+        <Controls />
       </div>
     );
   }
