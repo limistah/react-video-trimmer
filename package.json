@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "test": "cross-env NODE_ENV=test npm run eslint:src && jest --coverage && npm run typescript",
-    "build": "npm run clean && npm run build:umd && npm run build:es",
+    "build": "npm run clean && npm run build:umd && npm run build:es && npm run styleguide",
     "build:umd": "cross-env NODE_ENV=es rollup -c",
     "build:es": "cross-env BABEL_ENV=es babel ./src --out-dir ./dist/es --ignore '**/*.spec.js'",
     "start": "styleguidist server",
