@@ -14,10 +14,12 @@ class VideoPlayer extends React.Component {
       (oldTimeRange && newTimeRange.start !== oldTimeRange.start) ||
       (!oldTimeRange && newTimeRange.start > 0);
     if (canSeek) {
+      console.log({ canSeek });
       this.setState({ playing: false });
       this.player.seekTo(newTimeRange.start, "seconds");
     }
     if (newProps.playVideo !== this.props.playVideo) {
+      console.log("Playing Changed");
       this.setState({ playing: newProps.playVideo });
     }
   }

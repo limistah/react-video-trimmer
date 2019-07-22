@@ -75,19 +75,9 @@ class ReactVideoTrimmer extends React.PureComponent {
   handleVideoTrim = time => {
     // convert start time and end time to index of array buffers
     const secondsToMilliseconds = seconds => seconds * 10000;
-    const startToMilliseconds = secondsToMilliseconds(time.start);
-    const endToMilliseconds = secondsToMilliseconds(time.end);
+    // const startToMilliseconds = secondsToMilliseconds(time.start);
+    // const endToMilliseconds = secondsToMilliseconds(time.end);
     this.setState({ timeRange: time });
-    // Slice the available buffer
-    this.webVideo
-      .sliceVideoBuffer(startToMilliseconds, endToMilliseconds)
-      .then(async slicedBuffer => {
-        // convert sliced buffer to dataURL
-        this.webVideo.readAsDataURL(slicedBuffer).then(dataURL => {
-          // Update data URL
-          this.updateVideoDataURL(dataURL);
-        });
-      });
   };
   handleEncodeVideo = () => {
     console.log("Encode Video Now!");
@@ -128,30 +118,32 @@ class ReactVideoTrimmer extends React.PureComponent {
             DECODING...
           </Status>
         )}
+        {!decoding && videoDataURL && (
+          <Player
+            src={this.state.videoDataURL}
+            timeRange={this.state.timeRange}
+            playVideo={this.state.playVideo}
+            onPlayerPlay={this.handlePlayerPlay}
+            onPlayerPause={this.handlePlayerPause}
+          />
+        )}
+
         <Trimmer
-          videoFrames={this.state.videoFrames}
+          showTrimmer={this.state.videoDataURL}
           duration={this.webVideo.videoData.duration}
           onTrim={this.handleVideoTrim}
           timeRange={this.state.timeRange}
         />
+
         {!decoding && videoDataURL && (
-          <>
-            <Player
-              src={this.state.videoDataURL}
-              timeRange={this.state.timeRange}
-              playVideo={this.state.playVideo}
-              onPlayerPlay={this.handlePlayerPlay}
-              onPlayerPause={this.handlePlayerPause}
-            />
-            <Controls
-              showEncodeBtn={this.props.showEncodeBtn}
-              onReselectFile={this.handleReselectFile}
-              onEncode={this.handleEncodeVideo}
-              onPlayPauseClick={this.handlePlayPauseVideo}
-              processing={encoding}
-              playing={this.state.playVideo}
-            />
-          </>
+          <Controls
+            showEncodeBtn={this.props.showEncodeBtn}
+            onReselectFile={this.handleReselectFile}
+            onEncode={this.handleEncodeVideo}
+            onPlayPauseClick={this.handlePlayPauseVideo}
+            processing={encoding}
+            playing={this.state.playVideo}
+          />
         )}
       </div>
     );

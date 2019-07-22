@@ -122,7 +122,7 @@ export class VideoTrimmer extends PureComponent {
   render() {
     return (
       <div className="rvt-trimmer-cont" ref={e => (this.containerRef = e)}>
-        {this.props.duration && (
+        {this.props.showTrimmer && (
           <Trimmer
             onStartTimeChange={this.handleStartTimeChange}
             onEndTimeChange={this.handleEndTimeChange}
