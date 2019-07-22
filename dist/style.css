@@ -1,0 +1,253 @@
+.btn-reset,
+.rvt-controller-item,
+.rvt-file-picker-control,
+.rvt-controller-dropdown .rvt-controller-list a {
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+}
+
+.rvt-main-container > * {
+  box-sizing: border-box;
+}
+
+.rvt-main-container .rvt-icon-spin {
+  animation: spin infinite 1s linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rvt-file-picker {
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  background-color: #f7f2fd;
+  cursor: pointer;
+  color: #a256ff;
+}
+.rvt-file-picker input {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+
+.rvt-status {
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  background-color: #f7f2fd;
+  cursor: pointer;
+  font-size: 20px;
+  color: #a256ff;
+}
+.rvt-status input {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+
+.rvt-player-cont {
+  position: relative;
+}
+.rvt-player-cont .rvt-player-time-range-cont {
+  margin: 5px;
+  text-align: center;
+}
+.rvt-player-cont .rvt-player-time-range-cont .rvt-player-time-range {
+  color: #8f8f8f;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.btn-reset,
+.rvt-controller-item,
+.rvt-file-picker-control,
+.rvt-controller-dropdown .rvt-controller-list a {
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+}
+
+.rvt-controls-cont {
+  margin-top: 10px;
+  text-align: center;
+}
+.rvt-controls-cont .seconds {
+  font-size: 12px;
+  line-height: 36px;
+  margin-left: 10px;
+  display: inline-block;
+  overflow: hidden;
+  color: #aaa;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rvt-icon-spin {
+  animation: spin infinite 1s linear;
+}
+
+.rvt-controller-item,
+.rvt-file-picker-control {
+  display: inline-block;
+  font-size: 16px;
+  text-align: center;
+  color: #999;
+  padding: 10px;
+  margin-right: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.rvt-controller-item:hover,
+.rvt-file-picker-control:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.16);
+}
+.rvt-controller-item .rvt-icon,
+.rvt-file-picker-control .rvt-icon {
+  display: block;
+}
+
+.rvt-controller-dropdown {
+  display: inline-block;
+  position: relative;
+}
+.rvt-controller-dropdown .rvt-controller-list-wrap {
+  position: relative;
+}
+.rvt-controller-dropdown .rvt-controller-list {
+  position: absolute;
+  width: 60px;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition-durvtion: 0.3s;
+  transition-property: opacity, visibility;
+  list-style: none;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+}
+.rvt-controller-dropdown .rvt-controller-list a {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0;
+  color: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.rvt-controller-dropdown .rvt-controller-list a:hover {
+  background: #333;
+  color: #fff;
+}
+.rvt-controller-dropdown:hover .rvt-controller-list {
+  opacity: 1;
+  visibility: visible;
+}
+
+.rvt-controller-clipper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.rvt-trimmer-cont {
+  display: block;
+  width: 100%;
+  height: 15px;
+  position: relative;
+  margin-bottom: 10px;
+  background: #f7f2fd;
+}
+.rvt-trimmer-cont > * {
+  box-sizing: border-box;
+}
+.rvt-trimmer-cont .rvt-thumb {
+  position: relative;
+  display: inline-block;
+}
+
+.rvt-trimmer {
+  background: #a256ff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1200;
+}
+
+.rvt-player-cursor-current {
+  position: absolute;
+  font-size: 12px;
+  top: -22px;
+  padding: 1px 3px;
+  text-align: center;
+  color: #fff;
+  transform: translate(-50%) scale(0.8);
+  background: #a256ff;
+}
+.rvt-player-cursor-current .rvt-player-num {
+  font-family: monospace;
+}
+.rvt-player-cursor-current::after {
+  content: "";
+  position: absolute;
+  border: 5px solid transparent;
+  border-top-color: #a256ff;
+  bottom: -9px;
+  left: 50%;
+  margin-left: -5px;
+}
+
+.rvt-icon {
+  width: 1em;
+  height: 1em;
+  fill: #a256ff;
+  vertical-align: middle;
+}
+
+.rvt-dragger {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #999;
+  cursor: col-resize;
+}
+.rvt-dragger::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+}
+.rvt-dragger:hover {
+  background: #333;
+}
+
+.rvt-drag-current {
+  background: #0cf;
+}

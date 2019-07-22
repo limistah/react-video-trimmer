@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 import { readDataURL, arrayBufferToBlob, readArrayBuffer } from "./utils";
 import workerClient from "ffmpeg-webworker";
-import { fromS } from "hh-mm-ss";
+import { fromS } from "./formatSeconds";
 
 class WebVideo extends EventEmitter {
   constructor(videoFile) {
