@@ -30,6 +30,20 @@
     right: 0;
     left: 0; }
 
+.rvt-status {
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  background-color: #f7f2fd;
+  cursor: pointer;
+  font-size: 20px;
+  color: #a256ff; }
+  .rvt-status input {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    left: 0; }
+
 .rvt-player-cont {
   position: relative; }
   .rvt-player-cont .rvt-player-time-range-cont {
@@ -123,20 +137,6 @@
   position: absolute;
   width: 100%;
   height: 100%; }
-
-.rvt-status {
-  width: 100%;
-  text-align: center;
-  padding: 50px;
-  background-color: #f7f2fd;
-  cursor: pointer;
-  font-size: 20px;
-  color: #a256ff; }
-  .rvt-status input {
-    visibility: hidden;
-    position: absolute;
-    right: 0;
-    left: 0; }
 
 .rvt-trimmer-cont {
   display: block;
