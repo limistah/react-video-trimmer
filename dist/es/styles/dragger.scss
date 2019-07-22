@@ -1,0 +1,25 @@
+.rvt-dragger {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #999;
+  cursor: col-resize;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    top: 0;
+    bottom: 0;
+  }
+
+  &:hover {
+    background: #333;
+  }
+}
+
+.rvt-drag-current {
+  background: #0cf;
+}

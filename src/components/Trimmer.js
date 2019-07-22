@@ -2,8 +2,6 @@ import React, { PureComponent } from "react";
 import Dragger from "./Dragger";
 import { noop, formatSeconds, leftZero } from "../libs/utils";
 
-import "../styles/trimmer.scss";
-
 const TrimmerOverLay = props => {
   return (
     <div

@@ -20,7 +20,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 import React from "react";
 import ReactPlayer from "react-player";
-import "../styles/player.scss";
 import { formatSeconds, noop, leftZero } from "../libs/utils";
 
 var VideoPlayer =

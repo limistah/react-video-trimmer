@@ -1,6 +1,5 @@
 import React from "react";
 import Icon from "./Icon";
-import "../styles/controls.scss";
 
 var Controls = function Controls(_ref) {
   var onPlayPauseClick = _ref.onPlayPauseClick,

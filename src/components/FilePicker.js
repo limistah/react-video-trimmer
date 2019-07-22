@@ -1,6 +1,5 @@
 import React, { useCallback, useRef } from "react";
 import { isVideo, noop } from "../libs/utils";
-import "../styles/file-picker.scss";
 import Icon from "./Icon";
 
 function FilePicker(props) {

@@ -1,0 +1,111 @@
+.btn-reset {
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+}
+
+.rvt-controls-cont {
+  margin-top: 10px;
+  text-align: center;
+  .seconds {
+    font-size: 12px;
+    line-height: 36px;
+    margin-left: 10px;
+    display: inline-block;
+    overflow: hidden;
+    color: #aaa;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rvt-icon-spin {
+  animation: spin infinite 1s linear;
+}
+
+.rvt-controller-item,
+.rvt-file-picker-control {
+  @extend .btn-reset;
+
+  display: inline-block;
+  font-size: 16px;
+  text-align: center;
+  color: #999;
+  padding: 10px;
+  margin-right: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.16);
+  }
+
+  .rvt-icon {
+    display: block;
+  }
+}
+
+.rvt-controller-dropdown {
+  display: inline-block;
+  position: relative;
+
+  .rvt-controller-list-wrap {
+    position: relative;
+  }
+
+  .rvt-controller-list {
+    position: absolute;
+    width: 60px;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition-durvtion: 0.3s;
+    transition-property: opacity, visibility;
+    list-style: none;
+    background: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    margin: 0;
+    z-index: 10;
+
+    a {
+      @extend .btn-reset;
+
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 5px 0;
+      color: inherit;
+      font-size: 12px;
+      cursor: pointer;
+
+      &:hover {
+        background: #333;
+        color: #fff;
+      }
+    }
+  }
+
+  &:hover {
+    .rvt-controller-list {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.rvt-controller-clipper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

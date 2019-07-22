@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "../styles/icon.scss";
 
 var Download = function Download(_ref) {
   var className = _ref.className;

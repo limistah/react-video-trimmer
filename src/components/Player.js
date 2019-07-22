@@ -1,6 +1,5 @@
 import React from "react";
 import ReactPlayer from "react-player";
-import "../styles/player.scss";
 import { formatSeconds, noop, leftZero } from "../libs/utils";
 
 class VideoPlayer extends React.Component {

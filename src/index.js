@@ -5,9 +5,9 @@ import Player from "./components/Player";
 import Controls from "./components/Controls";
 import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
-import "./styles/main-container.scss";
 import Icon from "./components/Icon";
 import { noop, arrayBufferToBlob, readBlobURL, download } from "./libs/utils";
+import "./style.js";
 
 class ReactVideoTrimmer extends React.PureComponent {
   /**

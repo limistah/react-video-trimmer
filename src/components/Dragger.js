@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import "../styles/dragger.scss";
 
 import PropTypes from "prop-types";
 

@@ -17,43 +17,6 @@
   to {
     transform: rotate(360deg); } }
 
-.rvt-file-picker {
-  width: 100%;
-  text-align: center;
-  padding: 50px;
-  background-color: #f7f2fd;
-  cursor: pointer;
-  color: #a256ff; }
-  .rvt-file-picker input {
-    visibility: hidden;
-    position: absolute;
-    right: 0;
-    left: 0; }
-
-.rvt-status {
-  width: 100%;
-  text-align: center;
-  padding: 50px;
-  background-color: #f7f2fd;
-  cursor: pointer;
-  font-size: 20px;
-  color: #a256ff; }
-  .rvt-status input {
-    visibility: hidden;
-    position: absolute;
-    right: 0;
-    left: 0; }
-
-.rvt-player-cont {
-  position: relative; }
-  .rvt-player-cont .rvt-player-time-range-cont {
-    margin: 5px;
-    text-align: center; }
-    .rvt-player-cont .rvt-player-time-range-cont .rvt-player-time-range {
-      color: #8f8f8f;
-      font-size: 14px;
-      padding: 5px; }
-
 .btn-reset, .rvt-controller-item,
 .rvt-file-picker-control, .rvt-controller-dropdown .rvt-controller-list a {
   padding: 0;
@@ -138,6 +101,69 @@
   width: 100%;
   height: 100%; }
 
+.rvt-dragger {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #999;
+  cursor: col-resize; }
+  .rvt-dragger::after {
+    content: "";
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    top: 0;
+    bottom: 0; }
+  .rvt-dragger:hover {
+    background: #333; }
+
+.rvt-drag-current {
+  background: #0cf; }
+
+.rvt-file-picker {
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  background-color: #f7f2fd;
+  cursor: pointer;
+  color: #a256ff; }
+  .rvt-file-picker input {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    left: 0; }
+
+.rvt-icon {
+  width: 1em;
+  height: 1em;
+  fill: #a256ff;
+  vertical-align: middle; }
+
+.rvt-player-cont {
+  position: relative; }
+  .rvt-player-cont .rvt-player-time-range-cont {
+    margin: 5px;
+    text-align: center; }
+    .rvt-player-cont .rvt-player-time-range-cont .rvt-player-time-range {
+      color: #8f8f8f;
+      font-size: 14px;
+      padding: 5px; }
+
+.rvt-status {
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  background-color: #f7f2fd;
+  cursor: pointer;
+  font-size: 20px;
+  color: #a256ff; }
+  .rvt-status input {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    left: 0; }
+
 .rvt-trimmer-cont {
   display: block;
   width: 100%;
@@ -179,29 +205,3 @@
     bottom: -9px;
     left: 50%;
     margin-left: -5px; }
-
-.rvt-icon {
-  width: 1em;
-  height: 1em;
-  fill: #a256ff;
-  vertical-align: middle; }
-
-.rvt-dragger {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: #999;
-  cursor: col-resize; }
-  .rvt-dragger::after {
-    content: "";
-    position: absolute;
-    left: -2px;
-    right: -2px;
-    top: 0;
-    bottom: 0; }
-  .rvt-dragger:hover {
-    background: #333; }
-
-.rvt-drag-current {
-  background: #0cf; }

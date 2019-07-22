@@ -21,7 +21,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 import React, { PureComponent } from "react";
 import Dragger from "./Dragger";
 import { noop, formatSeconds, leftZero } from "../libs/utils";
-import "../styles/trimmer.scss";
 
 var TrimmerOverLay = function TrimmerOverLay(props) {
   return React.createElement("div", {

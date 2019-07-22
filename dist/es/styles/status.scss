@@ -1,0 +1,15 @@
+.rvt-status {
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  background-color: rgb(247, 242, 253);
+  cursor: pointer;
+  font-size: 20px;
+  color: rgb(162, 86, 255);
+  & input {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    left: 0;
+  }
+}

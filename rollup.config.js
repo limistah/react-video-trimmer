@@ -5,10 +5,16 @@ import { uglify } from "rollup-plugin-uglify";
 import scss from "rollup-plugin-scss";
 import builtins from "rollup-plugin-node-builtins";
 import globals from "rollup-plugin-node-globals";
+import copy from "rollup-plugin-copy";
 
 const umdGlobals = {
   react: "React",
-  "prop-types": "PropTypes"
+  "prop-types": "PropTypes",
+  Blob: "Blob",
+  URL: "URL",
+  Worker: "Worker",
+  FileReader: "FileReader",
+  Uint8Array: "Uint8Array"
 };
 
 export default {
@@ -33,6 +39,9 @@ export default {
     scss({
       output: "./dist/style.css",
       failOnError: true
+    }),
+    copy({
+      targets: [{ src: "src/styles/*", dest: "dist/es/styles" }]
     }),
     uglify()
   ]
