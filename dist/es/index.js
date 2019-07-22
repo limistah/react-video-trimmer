@@ -46,7 +46,7 @@ function (_React$PureComponent) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ReactVideoTrimmer).call(this, props));
 
-    _defineProperty(_assertThisInitialized(_this), "webVideo", {});
+    _defineProperty(_assertThisInitialized(_this), "webVideo", new WebVideo({}));
 
     _defineProperty(_assertThisInitialized(_this), "handleFFMPEGStdout", function (msg) {// console.log(msg);
     });
@@ -249,8 +249,6 @@ function (_React$PureComponent) {
     _defineProperty(_assertThisInitialized(_this), "VideoPlayerNoTrimmer", function () {
       return React.createElement(_this2.VideoPlayerWithTrimmer, null);
     });
-
-    _this.webVideo = new WebVideo({});
 
     _this.webVideo.on("processingFile", function () {
       return _this.updateIsDecoding(true);

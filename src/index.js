@@ -13,11 +13,10 @@ class ReactVideoTrimmer extends React.PureComponent {
   /**
    * @type {WebVideo}
    */
-  webVideo = {};
+  webVideo = new WebVideo({});
 
   constructor(props) {
     super(props);
-    this.webVideo = new WebVideo({});
     this.webVideo.on("processingFile", () => this.updateIsDecoding(true));
     this.webVideo.on("processedFile", () => this.updateIsDecoding(false));
 

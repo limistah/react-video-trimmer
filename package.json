@@ -97,6 +97,7 @@
     "babel-jest": "^24.1.0",
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-dynamic-import-node": "^2.2.0",
+    "babel-polyfill": "^6.26.0",
     "commitizen": "^2.10.1",
     "cross-env": "^5.2.0",
     "husky": "^0.14.3",
