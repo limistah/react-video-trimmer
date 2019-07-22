@@ -10,7 +10,7 @@ const {
 
 module.exports = {
   title: "react-video-trimmer",
-  styleguideDir: path.join(__dirname, "styleguide"),
+  styleguideDir: path.join(__dirname, "docs"),
   webpackConfig: createConfig([
     babel(),
     match(["*.scss", "*.css", "!*node_modules*"], [css(), sass()]),
