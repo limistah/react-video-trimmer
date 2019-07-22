@@ -1,0 +1,24 @@
+.btn-reset {
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+}
+
+.rvt-main-container {
+  > * {
+    box-sizing: border-box;
+  }
+  .rvt-icon-spin {
+    animation: spin infinite 1s linear;
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

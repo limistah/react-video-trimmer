@@ -1,9 +1,8 @@
 import React, { PureComponent } from "react";
-import VideoThumbs from "./VideoThumbs";
 import Dragger from "./Dragger";
 import { noop, formatSeconds, leftZero } from "../libs/utils";
 
-import "../styles/video-trimmer.scss";
+import "../styles/trimmer.scss";
 
 const TrimmerOverLay = props => {
   return (
@@ -121,22 +120,18 @@ export class VideoTrimmer extends PureComponent {
   };
 
   render() {
-    const { videoFrames } = this.props;
     return (
       <div className="rvt-trimmer-cont" ref={e => (this.containerRef = e)}>
-        {videoFrames && (videoFrames.length || "") && (
-          <>
-            <VideoThumbs videoFrames={this.props.videoFrames} />
-            <Trimmer
-              onStartTimeChange={this.handleStartTimeChange}
-              onEndTimeChange={this.handleEndTimeChange}
-              widthDurationRatio={this.widthDurationRatio}
-              containerWidth={this.containerWidth}
-              startTime={this.state.start || this.props.timeRange.start}
-              endTime={this.state.end || this.props.timeRange.end}
-              onGetData={this.handleGetTrimData}
-            />
-          </>
+        {this.props.duration && (
+          <Trimmer
+            onStartTimeChange={this.handleStartTimeChange}
+            onEndTimeChange={this.handleEndTimeChange}
+            widthDurationRatio={this.widthDurationRatio}
+            containerWidth={this.containerWidth}
+            startTime={this.state.start || this.props.timeRange.start}
+            endTime={this.state.end || this.props.timeRange.end}
+            onGetData={this.handleGetTrimData}
+          />
         )}
       </div>
     );

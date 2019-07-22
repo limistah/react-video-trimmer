@@ -1,0 +1,50 @@
+.rvt-trimmer-cont {
+  display: block;
+  width: 100%;
+  height: 15px;
+  position: relative;
+  margin-bottom: 10px;
+  background: rgb(247, 242, 253);
+  > * {
+    box-sizing: border-box;
+  }
+  & .rvt-thumb {
+    position: relative;
+    display: inline-block;
+  }
+}
+.rvt-trimmer {
+  background: rgb(162, 86, 255);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1200;
+}
+
+// cursorColor = #0cf;
+.rvt-player-cursor-current {
+  position: absolute;
+  font-size: 12px;
+  top: -22px;
+  padding: 1px 3px;
+  text-align: center;
+  color: #fff;
+  transform: translate(-50%) scale(0.8);
+  background: rgb(162, 86, 255);
+
+  .rvt-player-num {
+    font-family: monospace;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    border: 5px solid transparent;
+    border-top-color: rgb(162, 86, 255);
+    bottom: -9px;
+    left: 50%;
+    margin-left: -5px;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useCallback, useRef } from "react";
 import { isVideo, noop } from "../libs/utils";
 import "../styles/file-picker.scss";
+import Icon from "./Icon";
 
 function FilePicker(props) {
   const inputRef = useRef();
@@ -20,6 +21,7 @@ function FilePicker(props) {
   });
   return (
     <div className="rvt-file-picker" onClick={handleContainerClicked}>
+      <Icon name="music" />
       Pick A Video
       <input
         type="file"

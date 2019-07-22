@@ -61,6 +61,9 @@ class VideoPlayer extends React.Component {
           url={this.props.src}
           ref={el => (this.player = el)}
           playing={this.state.playing}
+          style={{
+            margin: "0 auto"
+          }}
         />
         <div className="rvt-player-time-range-cont">
           <span className="rvt-player-time-range">

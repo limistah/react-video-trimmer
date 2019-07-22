@@ -22,10 +22,10 @@ const Controls = ({
 
       <a
         className="rvt-controller-item"
-        title="Replay"
+        title="Select File"
         onClick={onReselectFile}
       >
-        <Icon name="replay" />
+        <Icon name="music" />
       </a>
       {!showEncodeBtn && (
         <div className="rvt-controller-dropdown rvt-controller-list-wrap">

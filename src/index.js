@@ -6,7 +6,7 @@ import Controls from "./components/Controls";
 import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
 import { encode } from "./libs/workerClient";
-import "./styles/video-trimmer.scss";
+import "./styles/main-container.scss";
 import Icon from "./components/Icon";
 
 class ReactVideoTrimmer extends React.PureComponent {
@@ -128,15 +128,12 @@ class ReactVideoTrimmer extends React.PureComponent {
             DECODING...
           </Status>
         )}
-        {/* {!decoding && videoDataURL && (
-          <Trimmer
-            videoFrames={this.state.videoFrames}
-            duration={this.webVideo.videoData.duration}
-            onTrim={this.handleVideoTrim}
-            timeRange={this.state.timeRange}
-          />
-        )} */}
-
+        <Trimmer
+          videoFrames={this.state.videoFrames}
+          duration={this.webVideo.videoData.duration}
+          onTrim={this.handleVideoTrim}
+          timeRange={this.state.timeRange}
+        />
         {!decoding && videoDataURL && (
           <>
             <Player
