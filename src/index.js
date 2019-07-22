@@ -7,7 +7,7 @@ import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
 import "./styles/main-container.scss";
 import Icon from "./components/Icon";
-import { noop, arrayBufferToBlob, readDataURL } from "./libs/utils";
+import { noop, arrayBufferToBlob, readBlobURL, download } from "./libs/utils";
 
 class ReactVideoTrimmer extends React.PureComponent {
   /**
@@ -165,7 +165,8 @@ class ReactVideoTrimmer extends React.PureComponent {
     );
   };
   handleDownloadVideo = () => {
-    console.log(this.state.encodedVideo);
+    const blobURL = readBlobURL(this.state.encodedVideo);
+    download(blobURL, "trimmed.mp4");
   };
   VideoPlayerNoTrimmer = () => {
     return <this.VideoPlayerWithTrimmer />;
