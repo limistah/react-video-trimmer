@@ -13,7 +13,8 @@ class WebVideo extends EventEmitter {
     workerClient.on("onFileReceived", () => this.emit("FFMPEGFileReceived"));
     workerClient.on("onDone", data => this.emit("FFMPEGDone", data));
   }
-  trimVideo = (start, length) => {
+  trimVideo = (start = 0, length) => {
+    // const startSeconds = fromS(start === 0 ? 1 : start, "hh:mm:ss");
     const startSeconds = fromS(start, "hh:mm:ss");
     workerClient.runCommand(
       `-ss ${startSeconds} -c copy -t ${length} sliced-output.mp4`
@@ -28,7 +29,6 @@ class WebVideo extends EventEmitter {
 
   readAsArrayBuffer = async () => {
     this._videoBuffer = await readArrayBuffer(this._videoFile);
-    console.log(this);
     return this.videoBuffer;
   };
 

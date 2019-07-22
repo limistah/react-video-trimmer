@@ -8,7 +8,9 @@ const Controls = ({
   onReselectFile,
   processing,
   onEncode,
-  showEncodeBtn
+  showEncodeBtn,
+  canDownload,
+  onDownload
 }) => {
   return (
     <div className="rvt-controls-cont">
@@ -29,9 +31,15 @@ const Controls = ({
       </a>
       {!showEncodeBtn && (
         <div className="rvt-controller-dropdown rvt-controller-list-wrap">
-          <a className="rvt-controller-item" onClick={onEncode}>
-            <Icon name={processing ? "spin" : "download"} />
-          </a>
+          {canDownload ? (
+            <a className="rvt-controller-item" onClick={onDownload}>
+              <Icon name="download" />
+            </a>
+          ) : (
+            <a className="rvt-controller-item" onClick={onEncode}>
+              <Icon name={processing ? "spin" : "replay"} />
+            </a>
+          )}
         </div>
       )}
     </div>
