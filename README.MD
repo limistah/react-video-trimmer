@@ -18,7 +18,7 @@ yarn add react-video-trimmer
 
 ```jsx
 import ReactVideoTrimmer from "react-video-trimmer";
-
+import "node_modules/react-video-trimmer/dist/style.css";
 <div>
   <ReactVideoTrimmer />
 </div>;
