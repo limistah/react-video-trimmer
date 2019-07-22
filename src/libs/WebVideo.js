@@ -1,11 +1,24 @@
 import { EventEmitter } from "events";
 import { readDataURL, arrayBufferToBlob, readArrayBuffer } from "./utils";
+import workerClient from "ffmpeg-webworker";
+import { fromS } from "hh-mm-ss";
 
 class WebVideo extends EventEmitter {
   constructor(videoFile) {
     super();
     this.videoFile = videoFile;
+
+    workerClient.on("onReady", () => this.emit("FFMPEGReady"));
+    workerClient.on("onStdout", msg => this.emit("FFMPEGStdout", msg));
+    workerClient.on("onFileReceived", () => this.emit("FFMPEGFileReceived"));
+    workerClient.on("onDone", data => this.emit("FFMPEGDone", data));
   }
+  trimVideo = (start, length) => {
+    const startSeconds = fromS(start, "hh:mm:ss");
+    workerClient.runCommand(
+      `-ss ${startSeconds} -c copy -t ${length} sliced-output.mp4`
+    );
+  };
   _videoData = {};
   _videoFile = null;
   /**
@@ -46,6 +59,9 @@ class WebVideo extends EventEmitter {
   };
 
   set videoFile(file) {
+    if (file && file.type) {
+      workerClient.inputFile = file;
+    }
     this._videoFile = file;
   }
 
@@ -139,34 +155,8 @@ class WebVideo extends EventEmitter {
         }
         this.emit("extractedFrames");
         resolve(frames);
-        // let chunks = [];
-        // arrayBuffer = arrayBuffer.byteLength ? arrayBuffer : this.videoBuffer;
-        // const typedBuffer = new Uint8Array(arrayBuffer);
-        // const microSec = 1000 * 60;
-        // let startChunk = 0;
-        // for (let i = microSec; i < typedBuffer.byteLength; i += microSec) {
-        //   const _buffer = arrayBuffer.slice(startChunk, i);
-        //   chunks.push(_buffer);
-        //   startChunk = i;
-        // }
       } catch (e) {
         reject(e);
-      }
-    });
-  };
-
-  sliceVideoBuffer = (begin, end) => {
-    return new Promise((resolve, reject) => {
-      try {
-        const videoBuffer = this.videoBuffer;
-        let slicedBuffer = null;
-        console.log(videoBuffer);
-        if (videoBuffer.byteLength) {
-          slicedBuffer = videoBuffer.slice(begin, end);
-        }
-        resolve(slicedBuffer);
-      } catch (error) {
-        reject(error);
       }
     });
   };

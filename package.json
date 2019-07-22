@@ -62,8 +62,10 @@
   "dependencies": {
     "attr-accept": "^1.1.3",
     "eslint-config-airbnb": "^17.1.1",
+    "ffmpeg-webworker": "^0.1.0",
     "ffmpeg.js": "^3.1.9001",
     "file-selector": "^0.1.11",
+    "hh-mm-ss": "^1.2.0",
     "jest": "^3.1.2",
     "jest-dom": "^3.1.2",
     "prop-types": "^15.7.2",

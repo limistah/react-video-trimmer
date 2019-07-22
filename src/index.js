@@ -20,21 +20,38 @@ class ReactVideoTrimmer extends React.PureComponent {
     this.webVideo = new WebVideo({});
     this.webVideo.on("processingFile", () => this.updateIsDecoding(true));
     this.webVideo.on("processedFile", () => this.updateIsDecoding(false));
-    this.webVideo.on("extractingFrames", () =>
-      this.updateIsExtractingFrame(true)
-    );
-    this.webVideo.on("extractedFrames", () => {
-      this.updateIsExtractingFrame(false);
-    });
+
+    this.webVideo.on("FFMPEGStdout", this.handleFFMPEGStdout);
+    this.webVideo.on("FFMPEGReady", this.handleFFMPEGReady);
+    this.webVideo.on("FFMPEGFileReceived", this.handleFFMPEGFileReceived);
+    this.webVideo.on("FFMPEGDone", this.handleFFMPEGDone);
   }
+
+  handleFFMPEGStdout = msg => {
+    console.log(msg);
+  };
+
+  handleFFMPEGReady = () => {
+    console.log("FFMPEG is Ready");
+  };
+
+  handleFFMPEGFileReceived = () => {
+    console.log("FFMPEG Received File");
+  };
+
+  handleFFMPEGDone = data => {
+    this.setState({ encoding: false, encoded: true });
+    // Read the file as data url, set the player and show a download btn
+    console.log("FFMPEG Done:", data);
+  };
 
   state = {
     decoding: false,
     encoding: false,
+    encoded: false,
     playVideo: false,
     videoDataURL: "",
     videoFrames: [],
-    isExtractingFrame: false,
     isDecoding: false,
     timeRange: { start: 0, end: 0 }
   };
@@ -53,34 +70,25 @@ class ReactVideoTrimmer extends React.PureComponent {
   handleFileSelected = file => {
     this.setState({ decoding: true });
     const webVideo = this.webVideo;
-
+    webVideo.videoFile = file;
     webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
-      //   // encode(file).then(_blob => {
-      //   //   const dataURL = URL.createObjectURL(_blob);
-      //   //   this.updateVideoDataURL(dataURL);
-      //   // });
-
       this.setState({ decoding: false });
       this.updateVideoDataURL(dataURL);
       this.setState({
         // timeRange: { start: 10, end: this.webVideo.videoData.duration }
         timeRange: { start: 10, end: 20 }
       });
-      //   webVideo.extractFramesFromVideo().then(frames => {
-      //     this.updateVideoFrames(frames);
-      //   });
     });
   };
 
   handleVideoTrim = time => {
-    // convert start time and end time to index of array buffers
-    const secondsToMilliseconds = seconds => seconds * 10000;
-    // const startToMilliseconds = secondsToMilliseconds(time.start);
-    // const endToMilliseconds = secondsToMilliseconds(time.end);
     this.setState({ timeRange: time });
   };
   handleEncodeVideo = () => {
-    console.log("Encode Video Now!");
+    const { timeRange } = this.state;
+    this.setState({ encoding: true, videoDataURL: "" });
+    const timeDifference = timeRange.end - timeRange.start;
+    this.webVideo.trimVideo(timeRange.start, timeDifference);
   };
   handlePlayPauseVideo = nextPlayPauseState => {
     const { playVideo } = this.state;
@@ -106,44 +114,51 @@ class ReactVideoTrimmer extends React.PureComponent {
     this.setState(state);
   };
   render() {
-    const { decoding, encoding, videoDataURL } = this.state;
+    const { decoding, encoding, encoded, videoDataURL } = this.state;
     return (
       <div className="rvt-main-container">
-        {!decoding && !videoDataURL && (
-          <FilePicker onFileSelected={this.handleFileSelected} />
-        )}
-        {decoding && !videoDataURL && (
-          <Status>
-            <Icon name="spin" className="rvt-icon-spin" />
-            DECODING...
-          </Status>
-        )}
-        {!decoding && videoDataURL && (
-          <Player
-            src={this.state.videoDataURL}
-            timeRange={this.state.timeRange}
-            playVideo={this.state.playVideo}
-            onPlayerPlay={this.handlePlayerPlay}
-            onPlayerPause={this.handlePlayerPause}
-          />
-        )}
+        {encoded ? (
+          <div>Encoded Download Video</div>
+        ) : (
+          <>
+            {!decoding && !encoding && !videoDataURL && (
+              <FilePicker onFileSelected={this.handleFileSelected} />
+            )}
+            {(decoding || encoding) && (
+              <Status>
+                <Icon name="spin" className="rvt-icon-spin" />
+                {encoding ? "ENCODING VIDEO" : "DECODING VIDEO"}...
+              </Status>
+            )}
 
-        <Trimmer
-          showTrimmer={this.state.videoDataURL}
-          duration={this.webVideo.videoData.duration}
-          onTrim={this.handleVideoTrim}
-          timeRange={this.state.timeRange}
-        />
+            {!decoding && !encoding && videoDataURL && (
+              <Player
+                src={this.state.videoDataURL}
+                timeRange={this.state.timeRange}
+                playVideo={this.state.playVideo}
+                onPlayerPlay={this.handlePlayerPlay}
+                onPlayerPause={this.handlePlayerPause}
+              />
+            )}
 
-        {!decoding && videoDataURL && (
-          <Controls
-            showEncodeBtn={this.props.showEncodeBtn}
-            onReselectFile={this.handleReselectFile}
-            onEncode={this.handleEncodeVideo}
-            onPlayPauseClick={this.handlePlayPauseVideo}
-            processing={encoding}
-            playing={this.state.playVideo}
-          />
+            <Trimmer
+              showTrimmer={this.state.videoDataURL}
+              duration={this.webVideo.videoData.duration}
+              onTrim={this.handleVideoTrim}
+              timeRange={this.state.timeRange}
+            />
+
+            {!decoding && !encoding && videoDataURL && (
+              <Controls
+                showEncodeBtn={this.props.showEncodeBtn}
+                onReselectFile={this.handleReselectFile}
+                onEncode={this.handleEncodeVideo}
+                onPlayPauseClick={this.handlePlayPauseVideo}
+                processing={encoding}
+                playing={this.state.playVideo}
+              />
+            )}
+          </>
         )}
       </div>
     );
