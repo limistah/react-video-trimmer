@@ -12,7 +12,7 @@ export var isVideo = function isVideo(file) {
 export var range = function range(min, max) {
   return Array.apply(null, {
     length: max - min + 1
-  }).map(function(v, i) {
+  }).map(function (v, i) {
     return i + min;
   });
 };
@@ -24,19 +24,16 @@ export var range = function range(min, max) {
  */
 
 export var readFile = function readFile(file) {
-  var dataType =
-    arguments.length > 1 && arguments[1] !== undefined
-      ? arguments[1]
-      : "ArrayBuffer";
-  return new Promise(function(resolve, reject) {
+  var dataType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "ArrayBuffer";
+  return new Promise(function (resolve, reject) {
     var reader = new FileReader();
     reader["readAs" + dataType](file);
 
-    reader.onload = function() {
+    reader.onload = function () {
       return resolve(reader.result);
     };
 
-    reader.onerror = function(err) {
+    reader.onerror = function (err) {
       return reject(err);
     };
   });
@@ -69,10 +66,7 @@ export var download = function download(url, name) {
   link.click();
 };
 export var rename = function rename(filename, ext, stamp) {
-  return ""
-    .concat(filename.replace(/\.\w+$/, ""))
-    .concat(stamp || "", ".")
-    .concat(ext);
+  return "".concat(filename.replace(/\.\w+$/, "")).concat(stamp || "", ".").concat(ext);
 };
 /**
  * format seconds to [minutes, integer, decimal(2)]
@@ -80,11 +74,7 @@ export var rename = function rename(filename, ext, stamp) {
  */
 
 export var formatSeconds = function formatSeconds(seconds) {
-  return [
-    Math.floor(seconds / 60),
-    Math.floor(seconds % 60),
-    Math.round((seconds % 1) * 100)
-  ];
+  return [Math.floor(seconds / 60), Math.floor(seconds % 60), Math.round(seconds % 1 * 100)];
 };
 export var leftZero = function leftZero(num, count) {
   return ("000000" + num).slice(-count);

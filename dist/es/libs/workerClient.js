@@ -13,21 +13,21 @@ export var encode = function encode(videoBlob, type) {
     return console.info(msg);
   };
 
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     var aab;
     var buffersReady;
     var workerReady;
     var posted;
     var fileReader = new FileReader();
 
-    fileReader.onload = function() {
+    fileReader.onload = function () {
       aab = this.result;
       postMessage();
     };
 
     fileReader.readAsArrayBuffer(videoBlob);
 
-    worker.onmessage = function(event) {
+    worker.onmessage = function (event) {
       var message = event.data;
 
       if (message.type == "ready") {
@@ -53,15 +53,11 @@ export var encode = function encode(videoBlob, type) {
       posted = true;
       worker.postMessage({
         type: "command",
-        arguments: "-i video.webm -ss 00:00:05 -c copy -t 12 sliced-output.mp4".split(
-          " "
-        ),
-        files: [
-          {
-            data: new Uint8Array(aab),
-            name: "video.webm"
-          }
-        ]
+        arguments: "-i video.webm -ss 00:00:05 -c copy -t 12 sliced-output.mp4".split(" "),
+        files: [{
+          data: new Uint8Array(aab),
+          name: "video.webm"
+        }]
       });
     };
   });

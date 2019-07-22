@@ -5,7 +5,7 @@ import Icon from "./Icon";
 
 function FilePicker(props) {
   var inputRef = useRef();
-  var handleFileChange = useCallback(function(e) {
+  var handleFileChange = useCallback(function (e) {
     if (e.target.files.length) {
       var video = e.target.files[0];
 
@@ -17,26 +17,20 @@ function FilePicker(props) {
       }
     }
   });
-  var handleContainerClicked = useCallback(function() {
+  var handleContainerClicked = useCallback(function () {
     inputRef.current.click();
   });
-  return React.createElement(
-    "div",
-    {
-      className: "rvt-file-picker",
-      onClick: handleContainerClicked
-    },
-    React.createElement(Icon, {
-      name: "music"
-    }),
-    "Pick A Video",
-    React.createElement("input", {
-      type: "file",
-      accept: "video/*",
-      onChange: handleFileChange,
-      ref: inputRef
-    })
-  );
+  return React.createElement("div", {
+    className: "rvt-file-picker",
+    onClick: handleContainerClicked
+  }, React.createElement(Icon, {
+    name: "music"
+  }), "Pick A Video", React.createElement("input", {
+    type: "file",
+    accept: "video/*",
+    onChange: handleFileChange,
+    ref: inputRef
+  }));
 }
 
 export default FilePicker;

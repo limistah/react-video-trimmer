@@ -2,7 +2,7 @@
   "name": "react-video-trimmer",
   "version": "0.0.0-development",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf ./dist",
     "test": "cross-env NODE_ENV=test npm run eslint:src && jest --coverage && npm run typescript",

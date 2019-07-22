@@ -27,12 +27,7 @@ var workerFile = function workerFile() {
       });
       postMessage({
         type: "stdout",
-        data:
-          "Received command: " +
-          Module.arguments.join(" ") +
-          (Module.TOTAL_MEMORY
-            ? ".  Processing with " + Module.TOTAL_MEMORY + " bits."
-            : "")
+        data: "Received command: " + Module.arguments.join(" ") + (Module.TOTAL_MEMORY ? ".  Processing with " + Module.TOTAL_MEMORY + " bits." : "")
       });
       var time = now();
       var result = ffmpeg_run(Module);
