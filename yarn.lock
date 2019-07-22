@@ -4646,10 +4646,10 @@ fecha@^2.3.3:
   resolved "https://registry.yarnpkg.com/fecha/-/fecha-2.3.3.tgz#948e74157df1a32fd1b12c3a3c3cdcb6ec9d96cd"
   integrity sha512-lUGBnIamTAwk4znq5BcqsDaxSmZ9nDVJaij6NvRt/Tg4R69gERA+otPKbS86ROw9nxVMw2/mp1fnaiWqbs6Sdg==
 
-ffmpeg-webworker@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ffmpeg-webworker/-/ffmpeg-webworker-0.2.0.tgz#ab57e25e2a2b893aa74034f220a1960c590ee337"
-  integrity sha512-F+6zrm9h4Zu1bkIrJ22y9ZRdjVErkfgc6uiLQMdPCX4xhO0miaeWsWOSD+JGGflefpesXxe1oS7acyr6QagKmg==
+ffmpeg-webworker@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/ffmpeg-webworker/-/ffmpeg-webworker-0.2.1.tgz#2867c1b58e426d835b9f1686271ed3fb05f554ac"
+  integrity sha512-emWKDhzGl0ioqSe+XBy9jagOngnsF7pzYXAfmrOlAfQ56CvO26TjF+vrK/BwFX9gJ+WN4xdvUkGyPjKAGrcqVw==
   dependencies:
     attr-accept "^1.1.3"
     file-selector "^0.1.11"
