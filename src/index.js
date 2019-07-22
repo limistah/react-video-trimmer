@@ -8,6 +8,7 @@ import WebVideo from "./libs/WebVideo";
 import { encode } from "./libs/workerClient";
 import "./styles/main-container.scss";
 import Icon from "./components/Icon";
+import { noop, arrayBufferToBlob, readDataURL } from "./libs/utils";
 
 class ReactVideoTrimmer extends React.PureComponent {
   /**
@@ -39,10 +40,14 @@ class ReactVideoTrimmer extends React.PureComponent {
     console.log("FFMPEG Received File");
   };
 
-  handleFFMPEGDone = data => {
-    this.setState({ encoding: false, encoded: true });
-    // Read the file as data url, set the player and show a download btn
-    console.log("FFMPEG Done:", data);
+  handleFFMPEGDone = result => {
+    // Read the file as result url, set the player and show a download btn
+    const blob = arrayBufferToBlob(result[0].data);
+    this.decodeVideoFile(blob, () => {
+      const handler = this.onVideoEncode || noop;
+      handler(result);
+      this.setState({ encoding: false, encoded: true });
+    });
   };
 
   state = {
@@ -67,7 +72,7 @@ class ReactVideoTrimmer extends React.PureComponent {
   updateVideoDuration = duration =>
     this.setState({ updateVideoDuration: duration });
 
-  handleFileSelected = file => {
+  decodeVideoFile = (file, doneCB = noop) => {
     this.setState({ decoding: true });
     const webVideo = this.webVideo;
     webVideo.videoFile = file;
@@ -75,10 +80,13 @@ class ReactVideoTrimmer extends React.PureComponent {
       this.setState({ decoding: false });
       this.updateVideoDataURL(dataURL);
       this.setState({
-        // timeRange: { start: 10, end: this.webVideo.videoData.duration }
-        timeRange: { start: 10, end: 20 }
+        timeRange: { start: 0, end: this.webVideo.videoData.duration }
       });
+      doneCB();
     });
+  };
+  handleFileSelected = file => {
+    this.decodeVideoFile(file);
   };
 
   handleVideoTrim = time => {
@@ -118,7 +126,24 @@ class ReactVideoTrimmer extends React.PureComponent {
     return (
       <div className="rvt-main-container">
         {encoded ? (
-          <div>Encoded Download Video</div>
+          <>
+            <Player
+              src={this.state.videoDataURL}
+              timeRange={this.state.timeRange}
+              playVideo={this.state.playVideo}
+              onPlayerPlay={this.handlePlayerPlay}
+              onPlayerPause={this.handlePlayerPause}
+            />
+            <Controls
+              showEncodeBtn={this.props.showEncodeBtn}
+              onReselectFile={this.handleReselectFile}
+              onEncode={this.handleEncodeVideo}
+              onPlayPauseClick={this.handlePlayPauseVideo}
+              processing={encoding}
+              canDownload={true}
+              playing={this.state.playVideo}
+            />
+          </>
         ) : (
           <>
             {!decoding && !encoding && !videoDataURL && (
