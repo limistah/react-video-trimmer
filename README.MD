@@ -2,6 +2,10 @@
 
 Amazing React component for manipulate videos lenght
 
+## Demo
+
+[See Demo](https://limistah.github.io/react-video-trimmer/)
+
 ## Installation
 
 ```bash
