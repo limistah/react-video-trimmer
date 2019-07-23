@@ -20,8 +20,7 @@ yarn add react-video-trimmer
 
 ## Usage
 
-**NOTE:** Do import the styles from
-`node_modules/react-video-trimmer/dist/style.css`
+**NOTE:** Do import the styles from `react-video-trimmer/dist/style.css`
 
 ```js
 import ReactVideoTrimmer from "react-video-trimmer";
@@ -40,7 +39,7 @@ Start and end value in seconds the trimmer should restrict to. Defaults to
 ```js static
 import React from "react";
 import ReactVideoTrimmer from "react-video-trimmer";
-import "node_modules/react-video-trimmer/dist/style.css";
+import "react-video-trimmer/dist/style.css";
 
 const Trimmer = () => {
   return (
@@ -58,7 +57,7 @@ Handler that receives the video encoding once it has been encoded
 ```js static
 import React from "react";
 import ReactVideoTrimmer from "react-video-trimmer";
-import "node_modules/react-video-trimmer/dist/style.css";
+import "react-video-trimmer/dist/style.css";
 
 const Trimmer = () => {
   const handleVideoEncode = React.useCallback(result => {
@@ -82,7 +81,7 @@ Pass a ref to access all the static methods of ReactVideoTrimmer methods
 ```js static
 import React from "react";
 import ReactVideoTrimmer from "react-video-trimmer";
-import "node_modules/react-video-trimmer/dist/style.css";
+import "react-video-trimmer/dist/style.css";
 
 const Trimmer = () => {
   const trimmerRef = React.useRef();

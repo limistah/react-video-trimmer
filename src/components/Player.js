@@ -2,7 +2,7 @@ import React from "react";
 import ReactPlayer from "react-player";
 import { formatSeconds, noop, leftZero } from "../libs/utils";
 
-class VideoPlayer extends React.Component {
+class Player extends React.Component {
   state = {
     playing: this.props.playVideo || false
   };
@@ -52,6 +52,7 @@ class VideoPlayer extends React.Component {
     handler();
   };
   render() {
+    console.log(this.props.timeRange);
     return (
       <div className="rvt-player-cont" onContextMenu={() => {}}>
         {/* <video src={props.src} controls={false} /> */}
@@ -66,7 +67,7 @@ class VideoPlayer extends React.Component {
             margin: "0 auto"
           }}
         />
-        <div className="rvt-player-time-range-cont">
+        {/* <div className="rvt-player-time-range-cont">
           <span className="rvt-player-time-range">
             From:{" "}
             <strong>{this.displaySeconds(this.props.timeRange.start)}</strong>
@@ -74,10 +75,10 @@ class VideoPlayer extends React.Component {
           <span className="rvt-player-time-range">
             To: <strong>{this.displaySeconds(this.props.timeRange.end)}</strong>
           </span>
-        </div>
+        </div> */}
       </div>
     );
   }
 }
 
-export default VideoPlayer;
+export default Player;

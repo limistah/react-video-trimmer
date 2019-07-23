@@ -8,12 +8,19 @@ import WebVideo from "./libs/WebVideo";
 import Icon from "./components/Icon";
 import { noop, arrayBufferToBlob, readBlobURL, download } from "./libs/utils";
 import "./style.js";
+import PropTypes from "prop-types";
 
 class ReactVideoTrimmer extends React.PureComponent {
   /**
    * @type {WebVideo}
    */
   webVideo = new WebVideo({});
+
+  propTypes = {
+    onVideoEncode: PropTypes.func,
+    showEncodeBtn: PropTypes.bool,
+    timeLimit: PropTypes.number
+  };
 
   constructor(props) {
     super(props);
@@ -59,7 +66,7 @@ class ReactVideoTrimmer extends React.PureComponent {
     videoDataURL: "",
     videoFrames: [],
     isDecoding: false,
-    timeRange: { start: 0, end: 0 },
+    timeRange: { start: 5, end: this.props.timeLimit || 15 },
     encodedVideo: null
   };
 
@@ -81,8 +88,12 @@ class ReactVideoTrimmer extends React.PureComponent {
     webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
       this.setState({ decoding: false });
       this.updateVideoDataURL(dataURL);
+      const timeRangeStart = this.state.timeRange.start;
+      const duration = this.webVideo.videoData.duration;
+      const timeLimit = timeRangeStart + (this.props.timeLimit || 10);
+      const timeRangeEnd = duration > timeLimit ? timeLimit : duration;
       this.setState({
-        timeRange: { start: 0, end: this.webVideo.videoData.duration }
+        timeRange: { start: timeRangeStart, end: timeRangeEnd }
       });
       doneCB();
     });
