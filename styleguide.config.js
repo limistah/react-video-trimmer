@@ -22,7 +22,7 @@ module.exports = {
   sections: [
     {
       name: "",
-      content: "README.MD"
+      content: path.resolve(__dirname, "examples/BASE.MD")
     }
   ]
 };

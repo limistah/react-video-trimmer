@@ -46,6 +46,9 @@ class ReactVideoTrimmer extends React.PureComponent {
   };
 
   handleFFMPEGDone = result => {
+    this.setState({
+      timeRange: { start: 0, end: this.state.timeRange.end }
+    });
     const videoBlob = arrayBufferToBlob(result[0].data);
     this.decodeVideoFile(videoBlob, () => {
       const handler = this.onVideoEncode || noop;
@@ -103,7 +106,7 @@ class ReactVideoTrimmer extends React.PureComponent {
     this.setState({ timeRange: time });
   };
   handleEncodeVideo = timeRange => {
-    this.setState({ encoding: true, videoDataURL: "" });
+    this.setState({ encoding: true, videoDataURL: "", playVideo: false });
     const timeDifference = timeRange.end - timeRange.start;
     // console.log(timeRange);
     this.webVideo.trimVideo(timeRange.start, timeDifference);
