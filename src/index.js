@@ -16,7 +16,7 @@ class ReactVideoTrimmer extends React.PureComponent {
    */
   webVideo = new WebVideo({});
 
-  propTypes = {
+  static propTypes = {
     onVideoEncode: PropTypes.func,
     showEncodeBtn: PropTypes.bool,
     timeLimit: PropTypes.number

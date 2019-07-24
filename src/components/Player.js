@@ -52,7 +52,6 @@ class Player extends React.Component {
     handler();
   };
   render() {
-    console.log(this.props.timeRange);
     return (
       <div className="rvt-player-cont" onContextMenu={() => {}}>
         {/* <video src={props.src} controls={false} /> */}

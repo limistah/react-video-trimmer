@@ -28,7 +28,7 @@ const Controls = ({
       >
         <Icon name="music" />
       </a>
-      {!showEncodeBtn && (
+      {showEncodeBtn && (
         <div className="rvt-controller-dropdown rvt-controller-list-wrap">
           {canDownload ? (
             <a className="rvt-controller-item" onClick={onDownload}>

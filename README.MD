@@ -25,7 +25,7 @@ yarn add react-video-trimmer
 ```js
 import ReactVideoTrimmer from "react-video-trimmer";
 <div>
-  <ReactVideoTrimmer />
+  <ReactVideoTrimmer timeLimit={20} showEncodeBtn />
 </div>;
 ```
 
@@ -95,7 +95,30 @@ const Trimmer = () => {
 
 ## Methods
 
-###
+### decodeVideoFile
+
+##### params
+
+- **file: Blob** A Blob/File with type matching `video/*`
+- **doneCB: function** Called after the decode action is completed
+
+### handleFileSelected
+
+Called when a valid video file is selected, in turn calls `decodeVideoFile` for
+proper handling
+
+##### params
+
+- **file: Blob** A Blob/File with type matching `video/*`
+
+### handleEncodeVideo
+
+Called when a valid video file is selected, in turn calls `decodeVideoFile` for
+proper handling
+
+##### params
+
+- **file: Blob** A Blob/File with type matching `video/*`
 
 ## License
 
