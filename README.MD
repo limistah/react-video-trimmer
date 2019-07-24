@@ -95,14 +95,36 @@ const Trimmer = () => {
 
 ## Methods
 
-### decodeVideoFile
+### handleFFMPEGStdout: void
+
+A listener to [ffmpeg-webworker](https://www.npmjs.com/package/ffmpeg-webworker)
+`FFMPEGStdout` event
+
+### handleFFMPEGReady: void
+
+A listener to [ffmpeg-webworker](https://www.npmjs.com/package/ffmpeg-webworker)
+`FFMPEGReady` event
+
+### handleFFMPEGFileReceived: void
+
+A listener to [ffmpeg-webworker](https://www.npmjs.com/package/ffmpeg-webworker)
+`FFMPEGFileReceived` event
+
+### handleFFMPEGDone: void
+
+A listener to [ffmpeg-webworker](https://www.npmjs.com/package/ffmpeg-webworker)
+`FFMPEGDone` event
+
+> Converts the returned result into a `Blob`, before updating the video player
+
+### decodeVideoFile: void
 
 ##### params
 
 - **file: Blob** A Blob/File with type matching `video/*`
 - **doneCB: function** Called after the decode action is completed
 
-### handleFileSelected
+### handleFileSelected: void
 
 Called when a valid video file is selected, in turn calls `decodeVideoFile` for
 proper handling
@@ -111,7 +133,7 @@ proper handling
 
 - **file: Blob** A Blob/File with type matching `video/*`
 
-### handleEncodeVideo
+### handleEncodeVideo: void
 
 Called when a valid video file is selected, in turn calls `decodeVideoFile` for
 proper handling
@@ -119,6 +141,15 @@ proper handling
 ##### params
 
 - **file: Blob** A Blob/File with type matching `video/*`
+
+### handleDownloadVideo: void
+
+Handler for the Download button `onClick` event. Downloads the converted video
+file
+
+##### params
+
+- **encodedVideo: Blob** Encoded video data converted to `Blob`
 
 ## License
 

@@ -74,9 +74,6 @@ class ReactVideoTrimmer extends React.PureComponent {
 
   updateVideoFrames = frames => this.setState({ videoFrames: frames });
 
-  updateIsExtractingFrame = state =>
-    this.setState({ updateIsExtractingFrame: state });
-
   updateIsDecoding = state => this.setState({ updateIsDecoding: state });
   updateVideoDuration = duration =>
     this.setState({ updateVideoDuration: duration });
@@ -105,8 +102,7 @@ class ReactVideoTrimmer extends React.PureComponent {
   handleVideoTrim = time => {
     this.setState({ timeRange: time });
   };
-  handleEncodeVideo = () => {
-    const { timeRange } = this.state;
+  handleEncodeVideo = timeRange => {
     this.setState({ encoding: true, videoDataURL: "" });
     const timeDifference = timeRange.end - timeRange.start;
     // console.log(timeRange);
@@ -161,11 +157,11 @@ class ReactVideoTrimmer extends React.PureComponent {
 
         {!decoding && !encoding && videoDataURL && (
           <Controls
-            onDownload={this.handleDownloadVideo}
+            onDownload={() => this.handleDownloadVideo(this.state.encodedVideo)}
             canDownload={encoded}
             showEncodeBtn={this.props.showEncodeBtn}
             onReselectFile={this.handleReselectFile}
-            onEncode={this.handleEncodeVideo}
+            onEncode={() => this.handleEncodeVideo(this.state.timeRange)}
             onPlayPauseClick={this.handlePlayPauseVideo}
             processing={encoding}
             playing={this.state.playVideo}
@@ -174,8 +170,8 @@ class ReactVideoTrimmer extends React.PureComponent {
       </>
     );
   };
-  handleDownloadVideo = () => {
-    const blobURL = readBlobURL(this.state.encodedVideo);
+  handleDownloadVideo = encodedVideo => {
+    const blobURL = readBlobURL(encodedVideo);
     download(blobURL, "trimmed.mp4");
   };
   VideoPlayerNoTrimmer = () => {
