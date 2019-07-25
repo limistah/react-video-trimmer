@@ -33,7 +33,7 @@ import ReactVideoTrimmer from "react-video-trimmer";
 
 ### timeRange: Number
 
-Start and end value in seconds the trimmer should restrict to.
+Start and end value in seconds the trimmer should restrict to.ti
 
 ```js static
 import React from "react";

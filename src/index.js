@@ -152,6 +152,7 @@ class ReactVideoTrimmer extends React.PureComponent {
           <Player
             src={this.state.videoDataURL}
             timeRange={this.state.timeRange}
+            timeLimit={this.props.timeLimit}
             playVideo={this.state.playVideo}
             onPlayerPlay={this.handlePlayerPlay}
             onPlayerPause={this.handlePlayerPause}

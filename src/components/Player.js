@@ -13,12 +13,10 @@ class Player extends React.Component {
       (oldTimeRange && newTimeRange.start !== oldTimeRange.start) ||
       (!oldTimeRange && newTimeRange.start > 0);
     if (canSeek) {
-      console.log({ canSeek });
       this.setState({ playing: false });
       this.player.seekTo(newTimeRange.start, "seconds");
     }
     if (newProps.playVideo !== this.props.playVideo) {
-      console.log("Playing Changed");
       this.setState({ playing: newProps.playVideo });
     }
   }
@@ -52,6 +50,7 @@ class Player extends React.Component {
     handler();
   };
   render() {
+    const { start, end } = this.props.timeRange;
     return (
       <div className="rvt-player-cont" onContextMenu={() => {}}>
         {/* <video src={props.src} controls={false} /> */}
@@ -66,15 +65,18 @@ class Player extends React.Component {
             margin: "0 auto"
           }}
         />
-        {/* <div className="rvt-player-time-range-cont">
+        <div className="rvt-player-time-range-cont">
           <span className="rvt-player-time-range">
-            From:{" "}
-            <strong>{this.displaySeconds(this.props.timeRange.start)}</strong>
+            From: <strong>{this.displaySeconds(start)}</strong>
           </span>
           <span className="rvt-player-time-range">
-            To: <strong>{this.displaySeconds(this.props.timeRange.end)}</strong>
+            To: <strong>{this.displaySeconds(end)}</strong>
           </span>
-        </div> */}
+          <span className="rvt-player-time-range">
+            Selected <strong>{this.displaySeconds(end - start)}</strong> of{" "}
+            <strong>{this.displaySeconds(this.props.timeLimit)}</strong> allowed
+          </span>
+        </div>
       </div>
     );
   }
