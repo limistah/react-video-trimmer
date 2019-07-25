@@ -41,9 +41,9 @@ var TimeStamp = function TimeStamp(props) {
     className: "rvt-player-num"
   }, formated[0]), "'", React.createElement("span", {
     className: "rvt-player-num"
-  }, formated[1]), ".", React.createElement("span", {
+  }, formated[1]), !props.noMicroSeconds && React.createElement(React.Fragment, null, ".", React.createElement("span", {
     className: "rvt-player-num"
-  }, leftZero(formated[2], 2)));
+  }, leftZero(formated[2], 2))));
 };
 
 var Trimmer =
@@ -86,10 +86,52 @@ function (_PureComponent) {
       return x;
     });
 
+    _defineProperty(_assertThisInitialized(_this), "withinTimeLimit", function (time) {
+      var isDragEnd = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var timeLimit = _this.props.timeLimit;
+      var startTime = _this.props.startTime;
+      var endTime = time;
+
+      if (!isDragEnd) {
+        startTime = time;
+        endTime = _this.props.endTime;
+      }
+
+      var duration = _this.props.duration;
+      var timeTillEnd = duration - endTime;
+      var currentRange = duration - startTime - timeTillEnd;
+      return timeLimit ? currentRange <= timeLimit : true;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "withinTimeRange", function (time) {
+      var isDragEnd = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var timeRange = _this.props.timeRangeLimit;
+      var interval = time - _this.props.startTime;
+
+      if (!isDragEnd) {
+        interval = _this.props.endTime - time;
+      }
+
+      return timeRange ? interval >= timeRange : true;
+    });
+
     _defineProperty(_assertThisInitialized(_this), "handleDragStart", function (pos) {
       var pos2Time = _this.pos2Time(_this.keepInRange(pos.x));
 
       var time = pos2Time;
+      var currentTime = _this.props.currentTime;
+
+      var currentTimeIsWithinRange = _this.withinTimeRange(time, false);
+
+      var currentTimeIsWithinLimit = _this.withinTimeLimit(time, false);
+
+      if (time >= currentTime || !currentTimeIsWithinRange || !currentTimeIsWithinLimit) {
+        time = _this.props.startTime;
+
+        var handler = _this.props.onPausePlayer || function () {};
+
+        handler();
+      }
 
       _this.props.onStartTimeChange(time);
     });
@@ -98,6 +140,20 @@ function (_PureComponent) {
       var pos2Time = _this.pos2Time(_this.keepInRange(pos.x));
 
       var time = pos2Time;
+      var endTime = _this.props.endTime;
+      var currentTime = _this.props.currentTime;
+
+      var currentTimeIsWithinRange = _this.withinTimeRange(time);
+
+      var currentTimeIsWithinLimit = _this.withinTimeLimit(time);
+
+      if (currentTime >= time || !currentTimeIsWithinRange || !currentTimeIsWithinLimit) {
+        time = _this.props.endTime;
+
+        var handler = _this.props.onPausePlayer || function () {};
+
+        handler();
+      }
 
       _this.props.onEndTimeChange(time);
     });
@@ -122,6 +178,7 @@ function (_PureComponent) {
     value: function render() {
       var start = this.time2pos(this.props.startTime);
       var end = this.time2pos(this.props.endTime);
+      var current = this.time2pos(this.props.currentTime);
       return React.createElement(React.Fragment, null, React.createElement(TrimmerOverLay, {
         left: 0,
         width: start
@@ -131,6 +188,13 @@ function (_PureComponent) {
         onDragStop: this.handleDragStop
       }, React.createElement(TimeStamp, {
         time: this.props.startTime
+      })), React.createElement(Dragger, {
+        x: current,
+        onDrag: function onDrag() {},
+        onDragStop: function onDragStop() {}
+      }, React.createElement(TimeStamp, {
+        noMicroSeconds: true,
+        time: this.props.currentTime
       })), React.createElement(Dragger, {
         x: end,
         onDrag: this.handleDragEnd,
@@ -206,13 +270,17 @@ function (_PureComponent2) {
           return _this3.containerRef = e;
         }
       }, this.props.showTrimmer && React.createElement(Trimmer, {
+        timeLimit: this.props.timeLimit,
         onStartTimeChange: this.handleStartTimeChange,
         onEndTimeChange: this.handleEndTimeChange,
         widthDurationRatio: this.widthDurationRatio,
         containerWidth: this.containerWidth,
         startTime: this.state.start || this.props.timeRange.start,
         endTime: this.state.end || this.props.timeRange.end,
-        onGetData: this.handleGetTrimData
+        currentTime: this.props.currentTime,
+        duration: this.props.duration,
+        onGetData: this.handleGetTrimData,
+        onPausePlayer: this.onPausePlayer
       }));
     }
   }, {

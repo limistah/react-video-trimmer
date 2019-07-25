@@ -87,9 +87,6 @@ function (_React$Component) {
       var canSeek = oldTimeRange && newTimeRange.start !== oldTimeRange.start || !oldTimeRange && newTimeRange.start > 0;
 
       if (canSeek) {
-        console.log({
-          canSeek: canSeek
-        });
         this.setState({
           playing: false
         });
@@ -97,7 +94,6 @@ function (_React$Component) {
       }
 
       if (newProps.playVideo !== this.props.playVideo) {
-        console.log("Playing Changed");
         this.setState({
           playing: newProps.playVideo
         });
@@ -114,6 +110,9 @@ function (_React$Component) {
       var _this2 = this,
           _React$createElement;
 
+      var _this$props$timeRange = this.props.timeRange,
+          start = _this$props$timeRange.start,
+          end = _this$props$timeRange.end;
       return React.createElement("div", {
         className: "rvt-player-cont",
         onContextMenu: function onContextMenu() {}
@@ -123,7 +122,15 @@ function (_React$Component) {
         return _this2.player = el;
       }), _defineProperty(_React$createElement, "playing", this.state.playing), _defineProperty(_React$createElement, "style", {
         margin: "0 auto"
-      }), _React$createElement)));
+      }), _React$createElement)), React.createElement("div", {
+        className: "rvt-player-time-range-cont"
+      }, React.createElement("span", {
+        className: "rvt-player-time-range"
+      }, "From: ", React.createElement("strong", null, this.displaySeconds(start))), React.createElement("span", {
+        className: "rvt-player-time-range"
+      }, "To: ", React.createElement("strong", null, this.displaySeconds(end))), React.createElement("span", {
+        className: "rvt-player-time-range"
+      }, "Selected ", React.createElement("strong", null, this.displaySeconds(end - start)), " of", " ", React.createElement("strong", null, this.displaySeconds(this.props.timeLimit)), " allowed")));
     }
   }]);
 

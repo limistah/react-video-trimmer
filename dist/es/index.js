@@ -69,7 +69,7 @@ function (_React$PureComponent) {
       var videoBlob = arrayBufferToBlob(result[0].data);
 
       _this.decodeVideoFile(videoBlob, function () {
-        var handler = _this.onVideoEncode || noop;
+        var handler = _this.props.onVideoEncode || noop;
         handler(result);
 
         _this.setState({
@@ -92,7 +92,8 @@ function (_React$PureComponent) {
         start: 5,
         end: _this.props.timeLimit || 15
       },
-      encodedVideo: null
+      encodedVideo: null,
+      playedSeconds: 0
     });
 
     _defineProperty(_assertThisInitialized(_this), "updateVideoDataURL", function (dataURL) {
@@ -133,10 +134,6 @@ function (_React$PureComponent) {
             arrayBuffer = _ref.arrayBuffer,
             dataURL = _ref.dataURL;
 
-        _this.setState({
-          decoding: false
-        });
-
         _this.updateVideoDataURL(dataURL);
 
         var timeRangeStart = _this.state.timeRange.start;
@@ -148,7 +145,12 @@ function (_React$PureComponent) {
           timeRange: {
             start: timeRangeStart,
             end: timeRangeEnd
-          }
+          },
+          playedSeconds: (timeRangeEnd - timeRangeStart) / 2 + timeRangeStart
+        });
+
+        _this.setState({
+          decoding: false
         });
 
         doneCB();
@@ -186,6 +188,8 @@ function (_React$PureComponent) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "handlePlayerPause", function () {
+      console.log("pause video");
+
       _this.setState({
         playVideo: false
       });
@@ -195,6 +199,14 @@ function (_React$PureComponent) {
       _this.setState({
         playVideo: true
       });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handlePlayerProgress", function (seconds) {
+      if (_this.state.playVideo) {
+        _this.setState({
+          playedSeconds: seconds
+        });
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleReselectFile", function () {
@@ -227,14 +239,20 @@ function (_React$PureComponent) {
       return React.createElement(React.Fragment, null, !decoding && !encoding && videoDataURL && React.createElement(Player, {
         src: _this.state.videoDataURL,
         timeRange: _this.state.timeRange,
+        timeLimit: _this.props.timeLimit,
         playVideo: _this.state.playVideo,
         onPlayerPlay: _this.handlePlayerPlay,
-        onPlayerPause: _this.handlePlayerPause
+        onPlayerPause: _this.handlePlayerPause,
+        onPlayerProgress: _this.handlePlayerProgress
       }), showTrimmer && React.createElement(Trimmer, {
+        onPausePlayer: _this.handlePlayerPause,
         showTrimmer: _this.state.videoDataURL,
         duration: _this.webVideo.videoData.duration,
         onTrim: _this.handleVideoTrim,
-        timeRange: _this.state.timeRange
+        timeLimit: _this.props.timeLimit,
+        timeRangeLimit: _this.props.timeRange,
+        timeRange: _this.state.timeRange,
+        currentTime: _this.state.playedSeconds
       }), !decoding && !encoding && videoDataURL && React.createElement(Controls, {
         onDownload: function onDownload() {
           return _this.handleDownloadVideo(_this.state.encodedVideo);
