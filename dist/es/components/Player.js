@@ -22,23 +22,23 @@ import React from "react";
 import ReactPlayer from "react-player";
 import { formatSeconds, noop, leftZero } from "../libs/utils";
 
-var VideoPlayer =
+var Player =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(VideoPlayer, _React$Component);
+  _inherits(Player, _React$Component);
 
-  function VideoPlayer() {
+  function Player() {
     var _getPrototypeOf2;
 
     var _this;
 
-    _classCallCheck(this, VideoPlayer);
+    _classCallCheck(this, Player);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(VideoPlayer)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Player)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       playing: _this.props.playVideo || false
@@ -79,7 +79,7 @@ function (_React$Component) {
     return _this;
   }
 
-  _createClass(VideoPlayer, [{
+  _createClass(Player, [{
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(newProps) {
       var newTimeRange = newProps.timeRange;
@@ -123,17 +123,11 @@ function (_React$Component) {
         return _this2.player = el;
       }), _defineProperty(_React$createElement, "playing", this.state.playing), _defineProperty(_React$createElement, "style", {
         margin: "0 auto"
-      }), _React$createElement)), React.createElement("div", {
-        className: "rvt-player-time-range-cont"
-      }, React.createElement("span", {
-        className: "rvt-player-time-range"
-      }, "From:", " ", React.createElement("strong", null, this.displaySeconds(this.props.timeRange.start))), React.createElement("span", {
-        className: "rvt-player-time-range"
-      }, "To: ", React.createElement("strong", null, this.displaySeconds(this.props.timeRange.end)))));
+      }), _React$createElement)));
     }
   }]);
 
-  return VideoPlayer;
+  return Player;
 }(React.Component);
 
-export default VideoPlayer;
+export default Player;

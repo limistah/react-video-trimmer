@@ -28,6 +28,7 @@ import WebVideo from "./libs/WebVideo";
 import Icon from "./components/Icon";
 import { noop, arrayBufferToBlob, readBlobURL, download } from "./libs/utils";
 import "./style.js";
+import PropTypes from "prop-types";
 
 var ReactVideoTrimmer =
 /*#__PURE__*/
@@ -58,6 +59,13 @@ function (_React$PureComponent) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleFFMPEGDone", function (result) {
+      _this.setState({
+        timeRange: {
+          start: 0,
+          end: _this.state.timeRange.end
+        }
+      });
+
       var videoBlob = arrayBufferToBlob(result[0].data);
 
       _this.decodeVideoFile(videoBlob, function () {
@@ -81,8 +89,8 @@ function (_React$PureComponent) {
       videoFrames: [],
       isDecoding: false,
       timeRange: {
-        start: 0,
-        end: 0
+        start: 5,
+        end: _this.props.timeLimit || 15
       },
       encodedVideo: null
     });
@@ -96,12 +104,6 @@ function (_React$PureComponent) {
     _defineProperty(_assertThisInitialized(_this), "updateVideoFrames", function (frames) {
       return _this.setState({
         videoFrames: frames
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "updateIsExtractingFrame", function (state) {
-      return _this.setState({
-        updateIsExtractingFrame: state
       });
     });
 
@@ -137,10 +139,15 @@ function (_React$PureComponent) {
 
         _this.updateVideoDataURL(dataURL);
 
+        var timeRangeStart = _this.state.timeRange.start;
+        var duration = _this.webVideo.videoData.duration;
+        var timeLimit = timeRangeStart + (_this.props.timeLimit || 10);
+        var timeRangeEnd = duration > timeLimit ? timeLimit : duration;
+
         _this.setState({
           timeRange: {
-            start: 0,
-            end: _this.webVideo.videoData.duration
+            start: timeRangeStart,
+            end: timeRangeEnd
           }
         });
 
@@ -158,12 +165,11 @@ function (_React$PureComponent) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleEncodeVideo", function () {
-      var timeRange = _this.state.timeRange;
-
+    _defineProperty(_assertThisInitialized(_this), "handleEncodeVideo", function (timeRange) {
       _this.setState({
         encoding: true,
-        videoDataURL: ""
+        videoDataURL: "",
+        playVideo: false
       });
 
       var timeDifference = timeRange.end - timeRange.start; // console.log(timeRange);
@@ -230,19 +236,23 @@ function (_React$PureComponent) {
         onTrim: _this.handleVideoTrim,
         timeRange: _this.state.timeRange
       }), !decoding && !encoding && videoDataURL && React.createElement(Controls, {
-        onDownload: _this.handleDownloadVideo,
+        onDownload: function onDownload() {
+          return _this.handleDownloadVideo(_this.state.encodedVideo);
+        },
         canDownload: encoded,
         showEncodeBtn: _this.props.showEncodeBtn,
         onReselectFile: _this.handleReselectFile,
-        onEncode: _this.handleEncodeVideo,
+        onEncode: function onEncode() {
+          return _this.handleEncodeVideo(_this.state.timeRange);
+        },
         onPlayPauseClick: _this.handlePlayPauseVideo,
         processing: encoding,
         playing: _this.state.playVideo
       }));
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleDownloadVideo", function () {
-      var blobURL = readBlobURL(_this.state.encodedVideo);
+    _defineProperty(_assertThisInitialized(_this), "handleDownloadVideo", function (encodedVideo) {
+      var blobURL = readBlobURL(encodedVideo);
       download(blobURL, "trimmed.mp4");
     });
 
@@ -292,5 +302,11 @@ function (_React$PureComponent) {
 
   return ReactVideoTrimmer;
 }(React.PureComponent);
+
+_defineProperty(ReactVideoTrimmer, "propTypes", {
+  onVideoEncode: PropTypes.func,
+  showEncodeBtn: PropTypes.bool,
+  timeLimit: PropTypes.number
+});
 
 export default ReactVideoTrimmer;

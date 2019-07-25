@@ -24,7 +24,7 @@ var Controls = function Controls(_ref) {
     onClick: onReselectFile
   }, React.createElement(Icon, {
     name: "music"
-  })), !showEncodeBtn && React.createElement("div", {
+  })), showEncodeBtn && React.createElement("div", {
     className: "rvt-controller-dropdown rvt-controller-list-wrap"
   }, canDownload ? React.createElement("a", {
     className: "rvt-controller-item",
