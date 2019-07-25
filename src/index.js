@@ -51,7 +51,7 @@ class ReactVideoTrimmer extends React.PureComponent {
     });
     const videoBlob = arrayBufferToBlob(result[0].data);
     this.decodeVideoFile(videoBlob, () => {
-      const handler = this.onVideoEncode || noop;
+      const handler = this.props.onVideoEncode || noop;
       handler(result);
       this.setState({
         encoding: false,
@@ -70,7 +70,8 @@ class ReactVideoTrimmer extends React.PureComponent {
     videoFrames: [],
     isDecoding: false,
     timeRange: { start: 5, end: this.props.timeLimit || 15 },
-    encodedVideo: null
+    encodedVideo: null,
+    playedSeconds: 0
   };
 
   updateVideoDataURL = dataURL => this.setState({ videoDataURL: dataURL });
@@ -86,15 +87,16 @@ class ReactVideoTrimmer extends React.PureComponent {
     const webVideo = this.webVideo;
     webVideo.videoFile = file;
     webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
-      this.setState({ decoding: false });
       this.updateVideoDataURL(dataURL);
       const timeRangeStart = this.state.timeRange.start;
       const duration = this.webVideo.videoData.duration;
       const timeLimit = timeRangeStart + (this.props.timeLimit || 10);
       const timeRangeEnd = duration > timeLimit ? timeLimit : duration;
       this.setState({
-        timeRange: { start: timeRangeStart, end: timeRangeEnd }
+        timeRange: { start: timeRangeStart, end: timeRangeEnd },
+        playedSeconds: (timeRangeEnd - timeRangeStart) / 2 + timeRangeStart
       });
+      this.setState({ decoding: false });
       doneCB();
     });
   };
@@ -116,10 +118,16 @@ class ReactVideoTrimmer extends React.PureComponent {
     this.setState({ playVideo: !playVideo });
   };
   handlePlayerPause = () => {
+    console.log("pause video");
     this.setState({ playVideo: false });
   };
   handlePlayerPlay = () => {
     this.setState({ playVideo: true });
+  };
+  handlePlayerProgress = seconds => {
+    if (this.state.playVideo) {
+      this.setState({ playedSeconds: seconds });
+    }
   };
   handleReselectFile = () => {
     const state = {
@@ -147,14 +155,19 @@ class ReactVideoTrimmer extends React.PureComponent {
             playVideo={this.state.playVideo}
             onPlayerPlay={this.handlePlayerPlay}
             onPlayerPause={this.handlePlayerPause}
+            onPlayerProgress={this.handlePlayerProgress}
           />
         )}
         {showTrimmer && (
           <Trimmer
+            onPausePlayer={this.handlePlayerPause}
             showTrimmer={this.state.videoDataURL}
             duration={this.webVideo.videoData.duration}
             onTrim={this.handleVideoTrim}
+            timeLimit={this.props.timeLimit}
+            timeRangeLimit={this.props.timeRange}
             timeRange={this.state.timeRange}
+            currentTime={this.state.playedSeconds}
           />
         )}
 

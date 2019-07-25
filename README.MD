@@ -31,10 +31,9 @@ import ReactVideoTrimmer from "react-video-trimmer";
 
 ## Props
 
-### timeRange: Object -> {start: 0, end: 0}
+### timeRange: Number
 
-Start and end value in seconds the trimmer should restrict to. Defaults to
-`{start: 0, end: video.duration}`
+Start and end value in seconds the trimmer should restrict to.
 
 ```js static
 import React from "react";
@@ -44,7 +43,7 @@ import "react-video-trimmer/dist/style.css";
 const Trimmer = () => {
   return (
     <div>
-      <ReactVideoTrimmer timeRange={{ start: 10, end: 100 }} />
+      <ReactVideoTrimmer timeRange={20} />
     </div>
   );
 };
