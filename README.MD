@@ -1,6 +1,6 @@
 # react-video-trimmer
 
-Amazing React component for manipulate videos lenght
+Amazing React component for manipulating video length
 
 ## Demo
 
