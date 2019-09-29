@@ -15,7 +15,7 @@
   }
 }
 .rvt-trimmer {
-  background: rgb(162, 86, 255);
+  background: #038c7f;
   position: absolute;
   top: 0;
   right: 0;
@@ -33,7 +33,7 @@
   text-align: center;
   color: #fff;
   transform: translate(-50%) scale(0.8);
-  background: rgb(162, 86, 255);
+  background: #038c7f;
 
   .rvt-player-num {
     font-family: monospace;
@@ -43,7 +43,7 @@
     content: "";
     position: absolute;
     border: 5px solid transparent;
-    border-top-color: rgb(162, 86, 255);
+    border-top-color: #038c7f;
     bottom: -9px;
     left: 50%;
     margin-left: -5px;
