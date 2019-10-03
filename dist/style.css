@@ -119,15 +119,16 @@
     background: #333; }
 
 .rvt-drag-current {
-  background: #0cf; }
+  background: #038c7f; }
 
 .rvt-file-picker {
   width: 100%;
   text-align: center;
   padding: 50px;
-  background-color: #f7f2fd;
+  border: 1px solid #038c7f;
+  background-color: #ccfdf856;
   cursor: pointer;
-  color: #a256ff; }
+  color: #038c7f; }
   .rvt-file-picker input {
     visibility: hidden;
     position: absolute;
@@ -137,7 +138,7 @@
 .rvt-icon {
   width: 1em;
   height: 1em;
-  fill: #a256ff;
+  fill: #038c7f;
   vertical-align: middle; }
 
 .rvt-player-cont {
@@ -154,10 +155,10 @@
   width: 100%;
   text-align: center;
   padding: 50px;
-  background-color: #f7f2fd;
+  background-color: #ccfdf856;
   cursor: pointer;
   font-size: 20px;
-  color: #a256ff; }
+  color: #038c7f; }
   .rvt-status input {
     visibility: hidden;
     position: absolute;
@@ -171,7 +172,7 @@
   position: relative;
   margin-bottom: 20px;
   margin-top: 30px;
-  background: #f7f2fd; }
+  background-color: #ccfdf856; }
   .rvt-trimmer-cont > * {
     box-sizing: border-box; }
   .rvt-trimmer-cont .rvt-thumb {
@@ -179,7 +180,7 @@
     display: inline-block; }
 
 .rvt-trimmer {
-  background: #a256ff;
+  background: #038c7f;
   position: absolute;
   top: 0;
   right: 0;
@@ -195,14 +196,14 @@
   text-align: center;
   color: #fff;
   transform: translate(-50%) scale(0.8);
-  background: #a256ff; }
+  background: #038c7f; }
   .rvt-player-cursor-current .rvt-player-num {
     font-family: monospace; }
   .rvt-player-cursor-current::after {
     content: "";
     position: absolute;
     border: 5px solid transparent;
-    border-top-color: #a256ff;
+    border-top-color: #038c7f;
     bottom: -9px;
     left: 50%;
     margin-left: -5px; }
