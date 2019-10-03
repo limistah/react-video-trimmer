@@ -203,7 +203,11 @@ class ReactVideoTrimmer extends React.PureComponent {
         ) : (
           <>
             {!decoding && !encoding && !videoDataURL && (
-              <FilePicker onFileSelected={this.handleFileSelected} />
+              <FilePicker
+                onFileSelected={this.handleFileSelected}
+                minSize={this.props.minSize}
+                maxSize={this.props.maxSize}
+              />
             )}
             {(decoding || encoding) && (
               <Status>

@@ -308,7 +308,9 @@ function (_React$PureComponent) {
       return React.createElement("div", {
         className: "rvt-main-container"
       }, encoded ? React.createElement(this.VideoPlayerNoTrimmer, null) : React.createElement(React.Fragment, null, !decoding && !encoding && !videoDataURL && React.createElement(FilePicker, {
-        onFileSelected: this.handleFileSelected
+        onFileSelected: this.handleFileSelected,
+        minSize: this.props.minSize,
+        maxSize: this.props.maxSize
       }), (decoding || encoding) && React.createElement(Status, null, React.createElement(Icon, {
         name: "spin",
         className: "rvt-icon-spin"

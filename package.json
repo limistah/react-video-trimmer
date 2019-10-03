@@ -52,6 +52,7 @@
     "file-selector": "^0.1.11",
     "hh-mm-ss": "^1.2.0",
     "prop-types": "^15.7.2",
+    "react-dropzone": "^10.1.9",
     "react-player": "^1.11.1",
     "webpack-blocks": "^2.0.1",
     "webworker-file": "^0.2.0",
