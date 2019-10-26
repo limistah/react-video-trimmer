@@ -129,12 +129,6 @@
     right: 0;
     left: 0; }
 
-.rvt-icon {
-  width: 1em;
-  height: 1em;
-  fill: #038c7f;
-  vertical-align: middle; }
-
 .rvt-dragger {
   position: absolute;
   top: 0;
@@ -154,6 +148,12 @@
 
 .rvt-drag-current {
   background: #038c7f; }
+
+.rvt-icon {
+  width: 1em;
+  height: 1em;
+  fill: #038c7f;
+  vertical-align: middle; }
 
 .rvt-trimmer-cont {
   display: block;
