@@ -115,7 +115,6 @@
     "type": "git",
     "url": "https://github.com/limistah/react-video-trimmer.git"
   },
-  "typings": "typings/react-dropzone.d.ts",
   "config": {
     "commitizen": {
       "path": "@commitlint/prompt"
