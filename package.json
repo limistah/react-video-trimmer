@@ -3,6 +3,9 @@
   "version": "0.9.0",
   "description": "",
   "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "clean": "rimraf ./dist",
     "test": "cross-env NODE_ENV=test npm run eslint:src && jest --coverage && npm run typescript",
