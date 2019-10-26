@@ -1,17 +1,3 @@
-.rvt-file-picker {
-  width: 100%;
-  text-align: center;
-  padding: 50px;
-  border: 1px solid #038c7f;
-  background-color: #ccfdf856;
-  cursor: pointer;
-  color: #038c7f; }
-  .rvt-file-picker input {
-    visibility: hidden;
-    position: absolute;
-    right: 0;
-    left: 0; }
-
 .btn-reset, .rvt-controller-item,
 .rvt-file-picker-control, .rvt-controller-dropdown .rvt-controller-list a {
   padding: 0;
@@ -115,20 +101,6 @@
   width: 100%;
   height: 100%; }
 
-.rvt-status {
-  width: 100%;
-  text-align: center;
-  padding: 50px;
-  background-color: #ccfdf856;
-  cursor: pointer;
-  font-size: 20px;
-  color: #038c7f; }
-  .rvt-status input {
-    visibility: hidden;
-    position: absolute;
-    right: 0;
-    left: 0; }
-
 .rvt-dragger {
   position: absolute;
   top: 0;
@@ -149,6 +121,20 @@
 .rvt-drag-current {
   background: #038c7f; }
 
+.rvt-file-picker {
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  border: 1px solid #038c7f;
+  background-color: #ccfdf856;
+  cursor: pointer;
+  color: #038c7f; }
+  .rvt-file-picker input {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    left: 0; }
+
 .rvt-icon {
   width: 1em;
   height: 1em;
@@ -164,6 +150,20 @@
       color: #8f8f8f;
       font-size: 14px;
       padding: 5px; }
+
+.rvt-status {
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  background-color: #ccfdf856;
+  cursor: pointer;
+  font-size: 20px;
+  color: #038c7f; }
+  .rvt-status input {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    left: 0; }
 
 .rvt-trimmer-cont {
   display: block;

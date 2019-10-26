@@ -4656,14 +4656,15 @@ fecha@^2.3.3:
   resolved "https://registry.yarnpkg.com/fecha/-/fecha-2.3.3.tgz#948e74157df1a32fd1b12c3a3c3cdcb6ec9d96cd"
   integrity sha512-lUGBnIamTAwk4znq5BcqsDaxSmZ9nDVJaij6NvRt/Tg4R69gERA+otPKbS86ROw9nxVMw2/mp1fnaiWqbs6Sdg==
 
-ffmpeg-webworker@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/ffmpeg-webworker/-/ffmpeg-webworker-0.4.3.tgz#68e42f3813aedbc5ccc03ba97cfd625ab2d8b395"
-  integrity sha512-tx/HJf/2g06/azGiD5IePUJgr2ss+sjBJymWLJaqVq1+pLPKHc2LOpP1Zm2siZCMySIYx2WmY+eQ6WBqoK5mHQ==
+ffmpeg-webworker@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ffmpeg-webworker/-/ffmpeg-webworker-1.0.2.tgz#b9b1e048246c395d95910e8f3f9af6b9233dec25"
+  integrity sha512-vN7wkRBlToGfyVDz6anajzwKiuQFGa6fFUH7qtiYqEfVxZb+iHn72ZaPZrZ2oON/4RR15GnWvcpGSla6TimylQ==
   dependencies:
     attr-accept "^1.1.3"
     file-selector "^0.1.11"
     prop-types "^15.7.2"
+    react-styleguidist "^9.2.0"
     rollup-plugin-node-globals "^1.4.0"
     webpack-blocks "^2.0.1"
     webworker-file "^0.2.0"
@@ -9667,7 +9668,7 @@ react-simple-code-editor@^0.9.7:
   resolved "https://registry.yarnpkg.com/react-simple-code-editor/-/react-simple-code-editor-0.9.15.tgz#59e3583832e9e98992d3674b2d7673b4cd1c5709"
   integrity sha512-M8iKgjBTBZK92tZYgOEfMuR7c3zZ0q0v3QYllSxIPx3SU+w003VofH50txXQSBTu92pSOm2tidON1HbQ1l8BDA==
 
-react-styleguidist@^9.0.1:
+react-styleguidist@^9.0.1, react-styleguidist@^9.2.0:
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/react-styleguidist/-/react-styleguidist-9.2.0.tgz#e1988f1255e945896d5f40b6b33f6a1ff76ec4ec"
   integrity sha512-DOoazQiIPYZS1ejt9UARrc0MHLaksideh5Q6qUl/AA4OrxR0TZKQA1gFtfeTMHwKF+xc7RgUilyVWtH+nqr17g==
