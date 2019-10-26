@@ -52,7 +52,11 @@ function (_React$PureComponent) {
     _defineProperty(_assertThisInitialized(_this), "handleFFMPEGStdout", function (msg) {// console.log(msg);
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleFFMPEGReady", function () {// console.log("FFMPEG is Ready");
+    _defineProperty(_assertThisInitialized(_this), "handleFFMPEGReady", function () {
+      // console.log("FFMPEG is Ready");
+      _this.setState({
+        ffmpegReady: true
+      });
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleFFMPEGFileReceived", function () {// console.log("FFMPEG Received File");
@@ -93,7 +97,8 @@ function (_React$PureComponent) {
         end: _this.props.timeLimit || 15
       },
       encodedVideo: null,
-      playedSeconds: 0
+      playedSeconds: 0,
+      ffmpegReady: false
     });
 
     _defineProperty(_assertThisInitialized(_this), "updateVideoDataURL", function (dataURL) {
@@ -304,10 +309,14 @@ function (_React$PureComponent) {
           decoding = _this$state2.decoding,
           encoding = _this$state2.encoding,
           encoded = _this$state2.encoded,
-          videoDataURL = _this$state2.videoDataURL;
+          videoDataURL = _this$state2.videoDataURL,
+          ffmpegReady = _this$state2.ffmpegReady;
       return React.createElement("div", {
         className: "rvt-main-container"
-      }, encoded ? React.createElement(this.VideoPlayerNoTrimmer, null) : React.createElement(React.Fragment, null, !decoding && !encoding && !videoDataURL && React.createElement(FilePicker, {
+      }, !ffmpegReady && React.createElement(Status, null, React.createElement(Icon, {
+        name: "spin",
+        className: "rvt-icon-spin"
+      }), this.props.loadingFFMPEGText || "PLEASE WAIT..."), ffmpegReady && encoded && React.createElement(this.VideoPlayerNoTrimmer, null), ffmpegReady && !encoded && React.createElement(React.Fragment, null, !decoding && !encoding && !videoDataURL && React.createElement(FilePicker, {
         onFileSelected: this.handleFileSelected,
         minSize: this.props.minSize,
         maxSize: this.props.maxSize
@@ -326,7 +335,8 @@ function (_React$PureComponent) {
 _defineProperty(ReactVideoTrimmer, "propTypes", {
   onVideoEncode: PropTypes.func,
   showEncodeBtn: PropTypes.bool,
-  timeLimit: PropTypes.number
+  timeLimit: PropTypes.number,
+  loadingFFMPEGText: PropTypes.string
 });
 
 export default ReactVideoTrimmer;
