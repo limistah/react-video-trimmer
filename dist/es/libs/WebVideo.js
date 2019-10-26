@@ -39,17 +39,39 @@ function (_EventEmitter) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(WebVideo).call(this));
 
+    _defineProperty(_assertThisInitialized(_this), "handleDoneClientDone", function (result) {
+      console.log(result);
+
+      if (!_this.optimizedVideo) {
+        _this.optimizedVideo = true;
+        var converted = arrayBufferToBlob(result[0].data);
+        console.log(converted);
+        workerClient.inputFile = converted;
+        setTimeout(_this.optimizeVideo, 500);
+      } // this.emit("FFMPEGDone", data)
+
+    });
+
     _defineProperty(_assertThisInitialized(_this), "trimVideo", function () {
       var start = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       var length = arguments.length > 1 ? arguments[1] : undefined;
-      // const startSeconds = fromS(start === 0 ? 1 : start, "hh:mm:ss");
+      // workerClient.runCommand(
+      //   `-c:v libx264 -b:v 1.5M -c:a aac -strict -2 -b:a 128k target.mp4`,
+      //   33554439
+      // );
       var startSeconds = fromS(start, "hh:mm:ss");
       workerClient.runCommand("-ss ".concat(startSeconds, " -c copy -t ").concat(length, " sliced-output.mp4"));
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "optimizeVideo", function () {
+      workerClient.runCommand("-c:v libx264 -b:v 1.5M -c:a aac -b:a 128k target.mp4");
     });
 
     _defineProperty(_assertThisInitialized(_this), "_videoData", {});
 
     _defineProperty(_assertThisInitialized(_this), "_videoFile", null);
+
+    _defineProperty(_assertThisInitialized(_this), "optimizedVideo", false);
 
     _defineProperty(_assertThisInitialized(_this), "_videoBuffer", {});
 
@@ -318,6 +340,7 @@ function (_EventEmitter) {
     });
 
     _this.videoFile = videoFile;
+    _this.workerClient = workerClient;
     workerClient.on("onReady", function () {
       return _this.emit("FFMPEGReady");
     });
@@ -327,9 +350,7 @@ function (_EventEmitter) {
     workerClient.on("onFileReceived", function () {
       return _this.emit("FFMPEGFileReceived");
     });
-    workerClient.on("onDone", function (data) {
-      return _this.emit("FFMPEGDone", data);
-    });
+    workerClient.on("onDone", _this.handleDoneClientDone);
     return _this;
   }
 

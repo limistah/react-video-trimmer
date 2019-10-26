@@ -7,21 +7,42 @@ class WebVideo extends EventEmitter {
   constructor(videoFile) {
     super();
     this.videoFile = videoFile;
+    this.workerClient = workerClient;
 
     workerClient.on("onReady", () => this.emit("FFMPEGReady"));
     workerClient.on("onStdout", msg => this.emit("FFMPEGStdout", msg));
     workerClient.on("onFileReceived", () => this.emit("FFMPEGFileReceived"));
-    workerClient.on("onDone", data => this.emit("FFMPEGDone", data));
+    workerClient.on("onDone", this.handleDoneClientDone);
   }
+  handleDoneClientDone = result => {
+    // console.log(result);
+    // if (!this.optimizedVideo) {
+    //   this.optimizedVideo = true;
+    //   const converted = arrayBufferToBlob(result[0].data);
+    //   // console.log(converted);
+    //   workerClient.inputFile = converted;
+    //   setTimeout(this.optimizeVideo, 500);
+    // } else {
+    const converted = arrayBufferToBlob(result[0].data);
+    this.emit("FFMPEGDone", result);
+    // }
+  };
   trimVideo = (start = 0, length) => {
-    // const startSeconds = fromS(start === 0 ? 1 : start, "hh:mm:ss");
     const startSeconds = fromS(start, "hh:mm:ss");
     workerClient.runCommand(
       `-ss ${startSeconds} -c copy -t ${length} sliced-output.mp4`
     );
   };
+
+  optimizeVideo = () => {
+    workerClient.runCommand(
+      `-strict -2 -vcodec libx264 -crf 23 output.mp4`,
+      253554432
+    );
+  };
   _videoData = {};
   _videoFile = null;
+  optimizedVideo = false;
   /**
    * @type {ArrayBuffer}
    */
@@ -90,7 +111,6 @@ class WebVideo extends EventEmitter {
 
     let videoObjectUrl = URL.createObjectURL(this.videoFile);
     let video = document.createElement("video");
-
     video.src = videoObjectUrl;
     while (
       (video.duration === Infinity || isNaN(video.duration)) &&

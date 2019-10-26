@@ -49,7 +49,8 @@ function (_React$PureComponent) {
 
     _defineProperty(_assertThisInitialized(_this), "webVideo", new WebVideo({}));
 
-    _defineProperty(_assertThisInitialized(_this), "handleFFMPEGStdout", function (msg) {// console.log(msg);
+    _defineProperty(_assertThisInitialized(_this), "handleFFMPEGStdout", function (msg) {
+      console.log(msg);
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleFFMPEGReady", function () {
@@ -63,25 +64,27 @@ function (_React$PureComponent) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleFFMPEGDone", function (result) {
-      _this.setState({
-        timeRange: {
-          start: 0,
-          end: _this.state.timeRange.end
-        }
-      });
-
-      var videoBlob = arrayBufferToBlob(result[0].data);
-
-      _this.decodeVideoFile(videoBlob, function () {
-        var handler = _this.props.onVideoEncode || noop;
-        handler(result);
-
-        _this.setState({
-          encoding: false,
-          encoded: true,
-          encodedVideo: videoBlob
-        });
-      });
+      console.log(result); // this.setState({
+      //   timeRange: { start: 0, end: this.state.timeRange.end }
+      // });
+      // const videoBlob = arrayBufferToBlob(result[0].data);
+      // this.decodeVideoFile(videoBlob, () => {
+      //   const handler = this.props.onVideoEncode || noop;
+      //   handler(result);
+      //   this.setState({
+      //     encoding: false,
+      //     encoded: true,
+      //     encodedVideo: videoBlob
+      //   });
+      // });
+      // if (this.state.videoOptimized && Array.isArray(result) && result[0]) {
+      // } else {
+      //   this.setState({
+      //     encodingText: "Optimizing video size",
+      //     videoOptimized: true
+      //   });
+      //   // this.webVideo.workerClient.runCommand("-vcodec libx265 -crf 20");
+      // }
     });
 
     _defineProperty(_assertThisInitialized(_this), "state", {
@@ -98,7 +101,9 @@ function (_React$PureComponent) {
       },
       encodedVideo: null,
       playedSeconds: 0,
-      ffmpegReady: false
+      ffmpegReady: false,
+      videoOptimized: false,
+      encodingText: ""
     });
 
     _defineProperty(_assertThisInitialized(_this), "updateVideoDataURL", function (dataURL) {
@@ -176,7 +181,8 @@ function (_React$PureComponent) {
       _this.setState({
         encoding: true,
         videoDataURL: "",
-        playVideo: false
+        playVideo: false,
+        encodingText: "Trimming Video"
       });
 
       var timeDifference = timeRange.end - timeRange.start; // console.log(timeRange);
@@ -323,7 +329,7 @@ function (_React$PureComponent) {
       }), (decoding || encoding) && React.createElement(Status, null, React.createElement(Icon, {
         name: "spin",
         className: "rvt-icon-spin"
-      }), encoding ? "ENCODING VIDEO" : "DECODING VIDEO", "..."), React.createElement(this.VideoPlayerWithTrimmer, {
+      }), encoding ? this.state.encodingText : "DECODING VIDEO", "..."), React.createElement(this.VideoPlayerWithTrimmer, {
         showTrimmer: true
       })));
     }

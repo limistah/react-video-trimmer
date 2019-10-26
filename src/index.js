@@ -52,15 +52,17 @@ class ReactVideoTrimmer extends React.PureComponent {
       timeRange: { start: 0, end: this.state.timeRange.end }
     });
     const videoBlob = arrayBufferToBlob(result[0].data);
-    this.decodeVideoFile(videoBlob, () => {
-      const handler = this.props.onVideoEncode || noop;
-      handler(result);
-      this.setState({
-        encoding: false,
-        encoded: true,
-        encodedVideo: videoBlob
+    setTimeout(() => {
+      this.decodeVideoFile(videoBlob, () => {
+        const handler = this.props.onVideoEncode || noop;
+        handler(result);
+        this.setState({
+          encoding: false,
+          encoded: true,
+          encodedVideo: videoBlob
+        });
       });
-    });
+    }, 300);
   };
 
   state = {
@@ -89,19 +91,22 @@ class ReactVideoTrimmer extends React.PureComponent {
     this.setState({ decoding: true });
     const webVideo = this.webVideo;
     webVideo.videoFile = file;
-    webVideo.decode(file).then(({ blob, arrayBuffer, dataURL }) => {
-      this.updateVideoDataURL(dataURL);
-      const timeRangeStart = this.state.timeRange.start;
-      const duration = this.webVideo.videoData.duration;
-      const timeLimit = timeRangeStart + (this.props.timeLimit || 10);
-      const timeRangeEnd = duration > timeLimit ? timeLimit : duration;
-      this.setState({
-        timeRange: { start: timeRangeStart, end: timeRangeEnd },
-        playedSeconds: (timeRangeEnd - timeRangeStart) / 2 + timeRangeStart
-      });
-      this.setState({ decoding: false });
-      doneCB();
-    });
+    webVideo
+      .decode(file)
+      .then(({ blob, arrayBuffer, dataURL }) => {
+        this.updateVideoDataURL(dataURL);
+        const timeRangeStart = this.state.timeRange.start;
+        const duration = this.webVideo.videoData.duration;
+        const timeLimit = timeRangeStart + (this.props.timeLimit || 10);
+        const timeRangeEnd = duration > timeLimit ? timeLimit : duration;
+        this.setState({
+          timeRange: { start: timeRangeStart, end: timeRangeEnd },
+          playedSeconds: (timeRangeEnd - timeRangeStart) / 2 + timeRangeStart
+        });
+        this.setState({ decoding: false });
+        doneCB();
+      })
+      .catch(e => console.log(e));
   };
   handleFileSelected = file => {
     this.decodeVideoFile(file);

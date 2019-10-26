@@ -7,7 +7,7 @@ import ReactVideoTrimmer from "react-video-trimmer";
 <div>
   <ReactVideoTrimmer
     loadingFFMPEGText="Loading required libs..."
-    timeLimit={10}
+    timeLimit={30}
     timeRange={5}
     showEncodeBtn
   />
