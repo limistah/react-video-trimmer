@@ -1,6 +1,9 @@
 # react-video-trimmer
 
-Amazing React component for manipulating video length
+Amazing React component for manipulating video length.
+
+With the aid of FFMPEG in the browser, it get easier to do amazing things with
+media content.
 
 ## Demo
 
@@ -67,6 +70,33 @@ const Trimmer = () => {
       <ReactVideoTrimmer
         onVideoEncode={handleVideoEncode}
         timeRange={{ start: 10, end: 100 }}
+      />
+    </div>
+  );
+};
+```
+
+### loadingFFMPEGText: string
+
+A text to tell users that FFMPEG is being loaded in the background.
+
+Default: _Please wait..._
+
+```js static
+import React from "react";
+import ReactVideoTrimmer from "react-video-trimmer";
+import "react-video-trimmer/dist/style.css";
+
+const Trimmer = () => {
+  const handleVideoEncode = React.useCallback(result => {
+    console.log("Encoding Result:", result);
+  });
+  return (
+    <div>
+      <ReactVideoTrimmer
+        onVideoEncode={handleVideoEncode}
+        timeRange={{ start: 10, end: 100 }}
+        loadingFFMPEGText="Loading required libs..."
       />
     </div>
   );
@@ -153,3 +183,8 @@ file
 ## License
 
 MIT
+
+## Credit
+
+This library uses the work of the guys at
+[ffmpeg-webworker](https://www.npmjs.com/package/ffmpeg-webworker)

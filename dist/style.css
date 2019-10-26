@@ -141,6 +141,16 @@
   fill: #038c7f;
   vertical-align: middle; }
 
+.rvt-player-cont {
+  position: relative; }
+  .rvt-player-cont .rvt-player-time-range-cont {
+    margin: 5px;
+    text-align: center; }
+    .rvt-player-cont .rvt-player-time-range-cont .rvt-player-time-range {
+      color: #8f8f8f;
+      font-size: 14px;
+      padding: 5px; }
+
 .rvt-status {
   width: 100%;
   text-align: center;
@@ -154,16 +164,6 @@
     position: absolute;
     right: 0;
     left: 0; }
-
-.rvt-player-cont {
-  position: relative; }
-  .rvt-player-cont .rvt-player-time-range-cont {
-    margin: 5px;
-    text-align: center; }
-    .rvt-player-cont .rvt-player-time-range-cont .rvt-player-time-range {
-      color: #8f8f8f;
-      font-size: 14px;
-      padding: 5px; }
 
 .rvt-trimmer-cont {
   display: block;

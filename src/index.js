@@ -19,7 +19,8 @@ class ReactVideoTrimmer extends React.PureComponent {
   static propTypes = {
     onVideoEncode: PropTypes.func,
     showEncodeBtn: PropTypes.bool,
-    timeLimit: PropTypes.number
+    timeLimit: PropTypes.number,
+    loadingFFMPEGText: PropTypes.string
   };
 
   constructor(props) {
@@ -39,6 +40,7 @@ class ReactVideoTrimmer extends React.PureComponent {
 
   handleFFMPEGReady = () => {
     // console.log("FFMPEG is Ready");
+    this.setState({ ffmpegReady: true });
   };
 
   handleFFMPEGFileReceived = () => {
@@ -71,7 +73,8 @@ class ReactVideoTrimmer extends React.PureComponent {
     isDecoding: false,
     timeRange: { start: 5, end: this.props.timeLimit || 15 },
     encodedVideo: null,
-    playedSeconds: 0
+    playedSeconds: 0,
+    ffmpegReady: false
   };
 
   updateVideoDataURL = dataURL => this.setState({ videoDataURL: dataURL });
@@ -195,12 +198,23 @@ class ReactVideoTrimmer extends React.PureComponent {
     return <this.VideoPlayerWithTrimmer />;
   };
   render() {
-    const { decoding, encoding, encoded, videoDataURL } = this.state;
+    const {
+      decoding,
+      encoding,
+      encoded,
+      videoDataURL,
+      ffmpegReady
+    } = this.state;
     return (
       <div className="rvt-main-container">
-        {encoded ? (
-          <this.VideoPlayerNoTrimmer />
-        ) : (
+        {!ffmpegReady && (
+          <Status>
+            <Icon name="spin" className="rvt-icon-spin" />
+            {this.props.loadingFFMPEGText || "PLEASE WAIT..."}
+          </Status>
+        )}
+        {ffmpegReady && encoded && <this.VideoPlayerNoTrimmer />}
+        {ffmpegReady && !encoded && (
           <>
             {!decoding && !encoding && !videoDataURL && (
               <FilePicker
