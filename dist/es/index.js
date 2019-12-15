@@ -1,5 +1,9 @@
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -25,6 +29,7 @@ import Player from "./components/Player";
 import Controls from "./components/Controls";
 import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
+import webVideoLoader from "./libs/preloadWebVideo";
 import Icon from "./components/Icon";
 import { noop, arrayBufferToBlob, readBlobURL, download } from "./libs/utils";
 import "./style.js";
@@ -47,7 +52,7 @@ function (_React$PureComponent) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ReactVideoTrimmer).call(this, props));
 
-    _defineProperty(_assertThisInitialized(_this), "webVideo", new WebVideo({}));
+    _defineProperty(_assertThisInitialized(_this), "webVideo", webVideoLoader({}));
 
     _defineProperty(_assertThisInitialized(_this), "handleFFMPEGStdout", function (msg) {// console.log(msg);
     });
@@ -85,7 +90,7 @@ function (_React$PureComponent) {
       }, 300);
     });
 
-    _defineProperty(_assertThisInitialized(_this), "state", {
+    _defineProperty(_assertThisInitialized(_this), "defaultState", {
       decoding: false,
       encoding: false,
       encoded: false,
@@ -101,6 +106,8 @@ function (_React$PureComponent) {
       playedSeconds: 0,
       ffmpegReady: false
     });
+
+    _defineProperty(_assertThisInitialized(_this), "state", _this.defaultState);
 
     _defineProperty(_assertThisInitialized(_this), "updateVideoDataURL", function (dataURL) {
       return _this.setState({
@@ -196,8 +203,7 @@ function (_React$PureComponent) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "handlePlayerPause", function () {
-      console.log("pause video");
-
+      // console.log("pause video");
       _this.setState({
         playVideo: false
       });
@@ -218,23 +224,9 @@ function (_React$PureComponent) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleReselectFile", function () {
-      var state = {
-        decoding: false,
-        encoding: false,
-        encoded: false,
-        encodedVideo: null,
-        playVideo: false,
-        videoDataURL: "",
-        videoFrames: [],
-        isExtractingFrame: false,
-        isDecoding: false,
-        timeRange: _this.props.timeRange || {
-          start: 0,
-          end: 0
-        }
-      };
-
-      _this.setState(state);
+      _this.setState(_objectSpread({}, _this.defaultState, {
+        ffmpegReady: true
+      }));
     });
 
     _defineProperty(_assertThisInitialized(_this), "VideoPlayerWithTrimmer", function (_ref2) {
@@ -342,4 +334,5 @@ _defineProperty(ReactVideoTrimmer, "propTypes", {
   loadingFFMPEGText: PropTypes.string
 });
 
+export var preloadWebVideo = webVideoLoader;
 export default ReactVideoTrimmer;
