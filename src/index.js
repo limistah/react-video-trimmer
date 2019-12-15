@@ -236,6 +236,6 @@ class ReactVideoTrimmer extends React.PureComponent {
   }
 }
 
-export const preloadWebVideo = preloadWebVideo;
+export const preloadWebVideo = webVideoLoader;
 
 export default ReactVideoTrimmer;

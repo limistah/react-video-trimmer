@@ -180,6 +180,20 @@ file
 
 - **encodedVideo: Blob** Encoded video data converted to `Blob`
 
+## Preloading ffmpeg
+
+ffmpeg.js will not load until the component is in scope. To override this, a
+`preloadWebVideo` field has been included to make ffmpeg load ahead of this
+component mount period.
+
+```js static
+import React from "react";
+import { preloadWebVideo } from "react-video-trimmer";
+
+// It is a function, no other process is required
+preloadWebVideo();
+```
+
 ## License
 
 MIT
