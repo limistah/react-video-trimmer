@@ -5,6 +5,7 @@ import Player from "./components/Player";
 import Controls from "./components/Controls";
 import Trimmer from "./components/Trimmer";
 import WebVideo from "./libs/WebVideo";
+import webVideoLoader from "./libs/preloadWebVideo";
 import Icon from "./components/Icon";
 import { noop, arrayBufferToBlob, readBlobURL, download } from "./libs/utils";
 import "./style.js";
@@ -14,7 +15,7 @@ class ReactVideoTrimmer extends React.PureComponent {
   /**
    * @type {WebVideo}
    */
-  webVideo = new WebVideo({});
+  webVideo = webVideoLoader({});
 
   static propTypes = {
     onVideoEncode: PropTypes.func,
@@ -65,7 +66,7 @@ class ReactVideoTrimmer extends React.PureComponent {
     }, 300);
   };
 
-  state = {
+  defaultState = {
     decoding: false,
     encoding: false,
     encoded: false,
@@ -78,6 +79,8 @@ class ReactVideoTrimmer extends React.PureComponent {
     playedSeconds: 0,
     ffmpegReady: false
   };
+
+  state = this.defaultState;
 
   updateVideoDataURL = dataURL => this.setState({ videoDataURL: dataURL });
 
@@ -126,7 +129,7 @@ class ReactVideoTrimmer extends React.PureComponent {
     this.setState({ playVideo: !playVideo });
   };
   handlePlayerPause = () => {
-    console.log("pause video");
+    // console.log("pause video");
     this.setState({ playVideo: false });
   };
   handlePlayerPlay = () => {
@@ -138,19 +141,10 @@ class ReactVideoTrimmer extends React.PureComponent {
     }
   };
   handleReselectFile = () => {
-    const state = {
-      decoding: false,
-      encoding: false,
-      encoded: false,
-      encodedVideo: null,
-      playVideo: false,
-      videoDataURL: "",
-      videoFrames: [],
-      isExtractingFrame: false,
-      isDecoding: false,
-      timeRange: this.props.timeRange || { start: 0, end: 0 }
-    };
-    this.setState(state);
+    this.setState({
+      ...this.defaultState,
+      ffmpegReady: true
+    });
   };
   VideoPlayerWithTrimmer = ({ showTrimmer }) => {
     const { decoding, encoding, encoded, videoDataURL } = this.state;
@@ -241,5 +235,7 @@ class ReactVideoTrimmer extends React.PureComponent {
     );
   }
 }
+
+export const preloadWebVideo = preloadWebVideo;
 
 export default ReactVideoTrimmer;
