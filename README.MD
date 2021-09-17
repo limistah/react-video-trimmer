@@ -2,7 +2,7 @@
 
 Amazing React component for manipulating video length.
 
-With the aid of FFMPEG in the browser, it get easier to do amazing things with
+With the aid of FFMPEG in the browser, it gets easier to do amazing things with
 media content.
 
 ## Demo
@@ -36,7 +36,7 @@ import ReactVideoTrimmer from "react-video-trimmer";
 
 ### timeRange: Number
 
-Start and end value in seconds the trimmer should restrict to.ti
+Start and end value in seconds the trimmer should restrict to.
 
 ```js static
 import React from "react";
@@ -105,7 +105,7 @@ const Trimmer = () => {
 
 ## React Ref
 
-Pass a ref to access all the static methods of ReactVideoTrimmer methods
+Pass a ref to access all the static methods of ReactVideoTrimmer
 
 ```js static
 import React from "react";
